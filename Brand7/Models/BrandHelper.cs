@@ -25,7 +25,7 @@ namespace Brand7.Models
         /// 第一次启动APP时，初始化本地Json文件
         /// </summary>
         /// <returns></returns>
-        public async Task FirstStartInitData()
+        public async Task FirstStartInitDataAsync()
         {
             StorageFile dataJsonFile = await _LocalFolder.CreateFileAsync("Brand7DataSource.json", CreationCollisionOption.ReplaceExisting);
 
@@ -38,12 +38,12 @@ namespace Brand7.Models
         /// </summary>
         /// <param name="brandList">品牌数据</param>
         /// <returns></returns>
-        public async Task GetAllBrands(ObservableCollection<BrandModel> brandList)
+        public async Task GetAllBrandsAsync(ObservableCollection<BrandModel> brandList)
         {
             brandList.Clear();
             List<BrandModel> allBrands = new List<BrandModel>();
 
-            allBrands = await ReadBrandsFromLocal();
+            allBrands = await ReadBrandsFromLocalAsync();
 
             foreach (var brand in allBrands)
             {
@@ -65,7 +65,7 @@ namespace Brand7.Models
         /// 将品牌数据写入本地文件
         /// </summary>
         /// <param name="brandList">品牌数据</param>
-        public async void WriteBrandsToLocal(ObservableCollection<BrandModel> brandList)
+        public async void WriteBrandsToLocalAsync(ObservableCollection<BrandModel> brandList)
         {
             StorageFile jsonFile = await _LocalFolder.GetFileAsync("Brand7DataSource.json");
 
@@ -85,7 +85,7 @@ namespace Brand7.Models
         /// 从本地文件中读入品牌数据
         /// </summary>
         /// <returns></returns>
-        private async Task<List<BrandModel>> ReadBrandsFromLocal()
+        private async Task<List<BrandModel>> ReadBrandsFromLocalAsync()
         {
             List<BrandModel> all = new List<BrandModel>();
             StorageFile jsonFile = await _LocalFolder.GetFileAsync("Brand7DataSource.json");

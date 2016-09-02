@@ -68,7 +68,7 @@ namespace Brand7
                 Bindings.Update();
 
                 //将更新后的数据保存到本地
-                BrandHelper.WriteBrandsToLocal(BrandList);
+                BrandHelper.WriteBrandsToLocalAsync(BrandList);
             }
             else
             {

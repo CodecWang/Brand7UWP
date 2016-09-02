@@ -50,11 +50,11 @@ namespace Brand7
             if (localSettings.Values["FirstStart"] == null)
             {
                 //第一次启动，初始化本地Json文件
-                await BrandHelper.FirstStartInitData();
+                await BrandHelper.FirstStartInitDataAsync();
                 localSettings.Values["FirstStart"] = true;
             }
 
-            await BrandHelper.GetAllBrands(BrandList);
+            await BrandHelper.GetAllBrandsAsync(BrandList);
             BrandList.ToList().ForEach(p => AllBrandList.Add(p));
 
             pgrProcess.IsActive = false;
