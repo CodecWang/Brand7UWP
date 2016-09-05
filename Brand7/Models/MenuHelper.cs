@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace Brand7.Models
 {
     class MenuHelper
     {
-        public static void GetMenuList(List<MenuModel> menuList)
+        public static void GetMenuList(ObservableCollection<MenuModel> menuList)
         {
             menuList.Add(new MenuModel(BrandCategory.Cater));
             menuList.Add(new MenuModel(BrandCategory.Technology));

@@ -9,12 +9,38 @@ namespace Brand7.Models
     public class MenuModel
     {
         public BrandCategory Category { get; set; }
-        public string Image { get; set; }
+        public string Name { get; set; }
 
         public MenuModel(BrandCategory category)
         {
             Category = category;
-            Image = string.Format("Assets/Icons/{0}.png", Category);
+            switch (category)
+            {
+                case BrandCategory.Car:
+                    Name = "CAR";
+                    break;
+                case BrandCategory.University:
+                    Name = "UNIVERSITY";
+                    break;
+                case BrandCategory.Life:
+                    Name = "LIFESTYLE";
+                    break;
+                case BrandCategory.Cater:
+                    Name = "FOOD & CATER";
+                    break;
+                case BrandCategory.Fashion:
+                    Name = "SPORTS & FASHION";
+                    break;
+                case BrandCategory.Technology:
+                    Name = "IT & TECHNOLOGY";
+                    break;
+                case BrandCategory.AudioOrVedio:
+                    Name = "AUDIO & VEDIO";
+                    break;
+                default:
+                    Name = category.ToString();
+                    break;
+            }
         }
     }
 

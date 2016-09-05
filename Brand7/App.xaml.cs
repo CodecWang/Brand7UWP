@@ -35,9 +35,8 @@ namespace Brand7
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.BackgroundColor = Color.FromArgb(100, 242, 242, 242);
+                statusBar.BackgroundColor = Color.FromArgb(255, 0, 0, 0);
                 statusBar.ForegroundColor = Colors.Black;
-                statusBar.BackgroundOpacity = 1;
             }
 
             Frame rootFrame = Window.Current.Content as Frame;

@@ -14,11 +14,14 @@ namespace Brand7.Models
     {
         private ObservableCollection<BrandModel> _AllBrands;
         private StorageFolder _LocalFolder;
+        ApplicationDataContainer localSettings;
+
 
         public BrandHelper()
         {
             _LocalFolder = ApplicationData.Current.LocalFolder;
             _AllBrands = new ObservableCollection<BrandModel>();
+            localSettings = ApplicationData.Current.LocalSettings;
         }
 
         /// <summary>
@@ -56,6 +59,11 @@ namespace Brand7.Models
         public void GetBrandsByCategory(ObservableCollection<BrandModel> brandList, BrandCategory category)
         {
             brandList.Clear();
+
+            if (category == BrandCategory.None)
+            {
+                _AllBrands.ToList().ForEach(p => brandList.Add(p));
+            }
 
             var filter = _AllBrands.Where(p => p.Category == category.ToString()).ToList();
             filter.ForEach(p => brandList.Add(p));

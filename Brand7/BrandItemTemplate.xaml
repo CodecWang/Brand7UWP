@@ -12,43 +12,43 @@
 
     <UserControl.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+        <Storyboard x:Name="sbImgScale">
+            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleX" To="1.05" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleY" To="1.05"  Duration="0:0:0.3" />
+        </Storyboard>
     </UserControl.Resources>
 
     <Grid Name="gdBrand" 
           BorderThickness="1"
           BorderBrush="LightGray"
-          Width="90"
-          Height="90"
-          CornerRadius="2">
+          Width="{x:Bind BrandModel.Size,Mode=OneWay}"
+          Height="{x:Bind BrandModel.Size,Mode=OneWay}"
+          Margin="0,0,-5,-5" 
+          PointerEntered="gdBrand_PointerEntered"
+          PointerExited="gdBrand_PointerExited">
 
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="Wide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="gdBrand.Width" Value="145"/>
-                        <Setter Target="gdBrand.Height" Value="145"/>
-                        <Setter Target="imgFinish.Width" Value="75"/>
-                        <Setter Target="imgFinish.Height" Value="75"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <Image Source="{x:Bind BrandModel.Image}"
-               Stretch="UniformToFill"/>
+        <Image Name="imgBrand" 
+               Source="{x:Bind BrandModel.Image}"
+               Stretch="UniformToFill">
+            <Image.RenderTransform>
+                <ScaleTransform x:Name="imgBrandScale"/>
+            </Image.RenderTransform>
+        </Image>
+        <Rectangle Name="rctAnimation"
+                   Fill="Black"
+                   Opacity="0.6"
+                   Visibility="Collapsed"/>
         <Rectangle Fill="Black"
                    Opacity="0.5"
-                   Visibility="{x:Bind BrandModel.IsFinished , Converter={StaticResource BoolToVisibilityConverter}}"/>
+                   Visibility="{x:Bind BrandModel.IsFinished,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
         <Image Name="imgFinish" 
                Source="Assets/finished.png"
-               Width="45"
-               Height="45"
+               Width="90"
+               Height="90"
                HorizontalAlignment="Right"
                VerticalAlignment="Bottom"
-               Visibility="{x:Bind BrandModel.IsFinished , Converter={StaticResource BoolToVisibilityConverter}}"/>
+               Visibility="{x:Bind BrandModel.IsFinished,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
     </Grid>
 
 </UserControl>

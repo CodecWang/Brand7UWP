@@ -10,114 +10,133 @@
     Loaded="Page_Loaded">
 
     <Page.Resources>
+        <Style x:Key="TxtSmallCommonBase" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="#1E1E1E"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TxtLargeCommonBase" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#1E1E1E"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
         <Style x:Key="BtnHamburgerStyle" TargetType="Button">
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#1E1E1E"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Content" Value="&#xE700;"/>
-            <Setter Property="Width" Value="48"/>
-            <Setter Property="Height" Value="48"/>
-            <Setter Property="Background" Value="#F2F2F2"/>
+            <Setter Property="Width" Value="65"/>
+            <Setter Property="Height" Value="65"/>
         </Style>
+
         <Style x:Key="BtnBackStyle" TargetType="Button">
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
             <Setter Property="Content" Value="&#xE0A6;"/>
-            <Setter Property="Width" Value="48"/>
-            <Setter Property="Height" Value="48"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="65"/>
+            <Setter Property="Height" Value="65"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <Style x:Key="TxtAppNameStyle" TargetType="TextBlock" BasedOn="{StaticResource TxtLargeCommonBase}">
+            <Setter Property="Text" Value="BRAND7"/>
+            <Setter Property="Margin" Value="20,20,0,40"/>
         </Style>
 
-        <DataTemplate x:Key="MenuItemTemplate" x:DataType="models:MenuModel">
-            <StackPanel Orientation="Horizontal" Margin="0,5">
-                <Image Source="{x:Bind Image}" 
-                       Width="18"
-                       Height="18"
-                       Margin="4,0,0,0"/>
-                <TextBlock Text="{x:Bind Category}"   
-                           Margin="30,0,0,0"
-                           FontSize="15"/>
-            </StackPanel>
+        <DataTemplate x:Key="MenuItemTemplate" x:DataType="models:MenuModel" >
+            <TextBlock Text="{x:Bind Name}" Style="{StaticResource TxtSmallCommonBase}" Margin="20,5"/>
         </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="Wide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="svMenu.DisplayMode" Value="CompactOverlay"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <RelativePanel Background="#F2F2F2">
-            <Button Name="btnHamburger" 
-                    Style="{StaticResource BtnHamburgerStyle}"
-                    Click="btnHamburger_Click" 
-                    PointerEntered="btnHamburger_PointerEntered"/>
-            <Button Name="btnBack"
-                    Style="{StaticResource BtnBackStyle}"
-                    Visibility="Collapsed"
-                    Click="btnBack_Click"
-                    RelativePanel.RightOf="btnHamburger"
-                    PointerEntered="btnBack_PointerEntered"/>
-        </RelativePanel>
-
-        <SplitView Name="svMenu"
-                   Grid.Row="1"
-                   DisplayMode="Overlay"
-                   OpenPaneLength="300">
-            <SplitView.Pane>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <SplitView Name="svMenu" DisplayMode="Overlay" OpenPaneLength="300">
+        <SplitView.Pane>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <RelativePanel>
+                    <TextBlock Name="txtAppName" Style="{StaticResource TxtAppNameStyle}"/>
                     <ListBox Name="lstMenu"  
+                             RelativePanel.Below="txtAppName"
                              ItemsSource="{x:Bind MenuList}" 
                              ItemTemplate="{StaticResource MenuItemTemplate}"
                              SelectionChanged="lstMenu_SelectionChanged"/>
-                </ScrollViewer>
-            </SplitView.Pane>
+                    <StackPanel RelativePanel.AlignBottomWithPanel="True" Orientation="Horizontal">
+                        <Button Width="150"  Background="Transparent" PointerEntered="btnCommon_PointerEntered">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE13D;" Margin="0,10,10,10"/>
+                                <TextBlock Text="PROCESS" Style="{StaticResource TxtSmallCommonBase}"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Width="150"  Background="Transparent" PointerEntered="btnCommon_PointerEntered">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" Margin="0,10,10,10"/>
+                                <TextBlock Text="SETTINGS" Style="{StaticResource TxtSmallCommonBase}"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </RelativePanel>
+            </ScrollViewer>
+        </SplitView.Pane>
 
-            <SplitView.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+        <SplitView.Content>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
+                <RelativePanel Name="rpTopControl">
+                    <Button Name="btnHamburger" 
+                            Style="{StaticResource BtnHamburgerStyle}"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            Click="btnHamburger_Click" 
+                            PointerEntered="btnCommon_PointerEntered"/>
+                    <Button Name="btnBack"
+                            Style="{StaticResource BtnBackStyle}"
+                            Visibility="Collapsed"
+                            RelativePanel.RightOf="btnHamburger"
+                            Click="btnBack_Click"
+                            PointerEntered="btnBack_PointerEntered"/>
+                    <Rectangle Name="rctTitleBar" 
+                               Fill="White"
+                               Height="65"
+                               RelativePanel.AlignRightWithPanel="True"
+                               RelativePanel.RightOf="btnBack"/>
                     <TextBlock Name="txtTitle" 
-                               Text="All Brands"
-                               FontSize="24" 
-                               Margin="20,20"/>
-                    <GridView Name="gvContent" 
+                               Text="ALL BRANDS"
+                               Style="{StaticResource TxtLargeCommonBase}"
+                               RelativePanel.AlignHorizontalCenterWithPanel="True"
+                               RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                </RelativePanel>
+
+                <ScrollViewer Name="svContent" 
                               Grid.Row="1" 
-                              Padding="20,0,0,0"
+                              VerticalScrollBarVisibility="Hidden"
+                              ViewChanging="svContent_ViewChanging"
+                              ViewChanged="svContent_ViewChanged">
+                    <GridView Name="gvContent" 
+                              ShowsScrollingPlaceholders="True"
                               ItemsSource="{x:Bind BrandList}"
                               SelectionMode="None"
                               IsItemClickEnabled="True"
                               ItemClick="gvContent_ItemClick">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="models:BrandModel">
-                                <local:BrandItemTemplate Margin="2"/>
+                                <local:BrandItemTemplate />
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
+                </ScrollViewer>
+                <ProgressRing Name="pgrProcess" 
+                              Grid.Row="1"
+                              Width="80"
+                              Height="80"
+                              Foreground="Gray"/>
+                <Frame Name="frmGame" Grid.Row="1"/>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
 
-                    <ProgressRing Name="pgrProcess" 
-                                  Grid.Row="1"
-                                  Width="80"
-                                  Height="80"
-                                  Foreground="Gray"/>
-                    <Frame Name="frmGame" Grid.Row="1"/>
-
-                </Grid>
-            </SplitView.Content>
-        </SplitView>
-    </Grid>
 </Page>

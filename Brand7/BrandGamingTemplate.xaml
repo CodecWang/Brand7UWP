@@ -40,14 +40,14 @@
                Stretch="UniformToFill"/>
         <Rectangle Fill="Black"
                    Opacity="0.5"
-                   Visibility="{x:Bind BrandModel.IsFinished , Converter={StaticResource BoolToVisibilityConverter}}"/>
+                   Visibility="{x:Bind BrandModel.IsFinished , Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <Image Name="imgFinish" 
                Source="Assets/finished.png"
                Width="90"
                Height="90"
                HorizontalAlignment="Right"
                VerticalAlignment="Bottom"
-               Visibility="{x:Bind BrandModel.IsFinished , Converter={StaticResource BoolToVisibilityConverter}}"/>
+               Visibility="{x:Bind BrandModel.IsFinished ,Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
     </Grid>
     
 </UserControl>

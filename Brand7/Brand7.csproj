@@ -127,6 +127,7 @@
     <Content Include="Assets\Icons\Cater.png" />
     <Content Include="Assets\Icons\Fashion.png" />
     <Content Include="Assets\Icons\Life.png" />
+    <Content Include="Assets\Icons\None.png" />
     <Content Include="Assets\Icons\Technology.png" />
     <Content Include="Assets\Icons\University.png" />
     <Content Include="Assets\Images\AudioOrVedio\DC.jpg" />
