@@ -80,6 +80,17 @@ namespace Brand7
             btnBack.Visibility = Visibility.Collapsed;
         }
 
+        private void lstMenu_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MenuModel menu = e.ClickedItem as MenuModel;
+
+            svMenu.IsPaneOpen = false;
+            txtTitle.Text = menu.Name;
+            btnBack.Visibility = Visibility.Visible;
+            frmGame.Visibility = Visibility.Collapsed;
+            BrandHelper.GetBrandsByCategory(BrandList, menu.Category);
+        }
+
         private void gvContent_ItemClick(object sender, ItemClickEventArgs e)
         {
             BrandModel clickedBrand = e.ClickedItem as BrandModel;
@@ -89,29 +100,6 @@ namespace Brand7
             frmGame.Visibility = Visibility.Visible;
             rpTopControl.Visibility = Visibility.Visible;
             frmGame.Navigate(typeof(Gaming), BrandList);
-        }
-
-        private void lstMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BrandCategory category;
-
-            switch (lstMenu.SelectedIndex)
-            {
-                case 0: category = BrandCategory.Cater; break;
-                case 1: category = BrandCategory.Technology; break;
-                case 2: category = BrandCategory.Car; break;
-                case 3: category = BrandCategory.AudioOrVedio; break;
-                case 4: category = BrandCategory.Life; break;
-                case 5: category = BrandCategory.Fashion; break;
-                case 6: category = BrandCategory.University; break;
-                default: category = BrandCategory.None; break;
-            }
-
-            svMenu.IsPaneOpen = false;
-            txtTitle.Text = category.ToString();
-            btnBack.Visibility = Visibility.Visible;
-            frmGame.Visibility = Visibility.Collapsed;
-            BrandHelper.GetBrandsByCategory(BrandList, category);
         }
 
         private void btnCommon_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -162,6 +150,8 @@ namespace Brand7
             view.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             view.TitleBar.ButtonForegroundColor = Color.FromArgb(255, 30, 30, 30);
         }
+
+ 
 
         /// <summary>
         /// 更新列表中品牌的宽、高度

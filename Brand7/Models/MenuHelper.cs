@@ -11,13 +11,13 @@ namespace Brand7.Models
     {
         public static void GetMenuList(ObservableCollection<MenuModel> menuList)
         {
-            menuList.Add(new MenuModel(BrandCategory.Cater));
-            menuList.Add(new MenuModel(BrandCategory.Technology));
             menuList.Add(new MenuModel(BrandCategory.Car));
-            menuList.Add(new MenuModel(BrandCategory.AudioOrVedio));
-            menuList.Add(new MenuModel(BrandCategory.Life));
+            menuList.Add(new MenuModel(BrandCategory.Express));
+            menuList.Add(new MenuModel(BrandCategory.Lifestyle));
+            menuList.Add(new MenuModel(BrandCategory.Cater));
+            menuList.Add(new MenuModel(BrandCategory.AV));
+            menuList.Add(new MenuModel(BrandCategory.Tech));
             menuList.Add(new MenuModel(BrandCategory.Fashion));
-            menuList.Add(new MenuModel(BrandCategory.University));
         }
     }
 }

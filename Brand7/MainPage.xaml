@@ -47,7 +47,7 @@
         </Style>
 
         <DataTemplate x:Key="MenuItemTemplate" x:DataType="models:MenuModel" >
-            <TextBlock Text="{x:Bind Name}" Style="{StaticResource TxtSmallCommonBase}" Margin="20,5"/>
+            <TextBlock Text="{x:Bind Name}" Style="{StaticResource TxtSmallCommonBase}" Margin="20"/>
         </DataTemplate>
     </Page.Resources>
 
@@ -57,11 +57,13 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <RelativePanel>
                     <TextBlock Name="txtAppName" Style="{StaticResource TxtAppNameStyle}"/>
-                    <ListBox Name="lstMenu"  
+                    <ListView Name="lstMenu" 
+                              Width="300"
                              RelativePanel.Below="txtAppName"
                              ItemsSource="{x:Bind MenuList}" 
                              ItemTemplate="{StaticResource MenuItemTemplate}"
-                             SelectionChanged="lstMenu_SelectionChanged"/>
+                              IsItemClickEnabled="True"
+                              ItemClick="lstMenu_ItemClick"/>
                     <StackPanel RelativePanel.AlignBottomWithPanel="True" Orientation="Horizontal">
                         <Button Width="150"  Background="Transparent" PointerEntered="btnCommon_PointerEntered">
                             <StackPanel Orientation="Horizontal">
