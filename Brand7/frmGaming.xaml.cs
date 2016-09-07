@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -14,19 +15,15 @@ namespace Brand7
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Gaming : Page
+    public sealed partial class frmGaming : Page
     {
         BrandHelper BrandHelper;
         BrandModel CurrentBrand;
-        ObservableCollection<BrandModel> BrandList;
+        ObservableCollection<BrandModel> BrandList = new ObservableCollection<BrandModel>();
 
-        public Gaming()
+        public frmGaming()
         {
             this.InitializeComponent();
-
-            BrandHelper = new BrandHelper();
-            CurrentBrand = new BrandModel();
-            BrandList = new ObservableCollection<BrandModel>();
         }
 
         /// <summary>
@@ -35,7 +32,14 @@ namespace Brand7
         /// <param name="e">页面参数</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            BrandList = (ObservableCollection<BrandModel>)e.Parameter;
+            BrandHelper = (BrandHelper)e.Parameter;
+            BrandHelper.BrandList.ToList().ForEach(p => BrandList.Add(p));
+            DataTransferManager.GetForCurrentView().DataRequested += Gaming_DataRequested;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            DataTransferManager.GetForCurrentView().DataRequested -= Gaming_DataRequested;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -46,33 +50,51 @@ namespace Brand7
             CurrentBrand.IsSelected = false;
         }
 
+        /// <summary>
+        /// 共享（求助）功能
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void Gaming_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+        {
+            var deferral = args.Request.GetDeferral();
+
+            //获取要共享的图片
+            string uri = string.Format("ms-appx:///{0}", CurrentBrand.Image);
+            args.Request.Data.Properties.Title = "ASK FOR HELP";
+            args.Request.Data.Properties.Description = "Ask friends for help.";
+            args.Request.Data.SetBitmap(Windows.Storage.Streams.RandomAccessStreamReference.CreateFromUri(new Uri(uri)));
+
+            deferral.Complete();
+        }
+
         private void fvGaming_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CurrentBrand = fvGaming.SelectedItem as BrandModel;
-
-            tipSwitch.IsOn = false;
-            asbInput.Text = string.Empty;
             Bindings.Update();
-            asbInput.Focus(FocusState.Pointer);
+
+            asbInput.Text = string.Empty;
+            txtTip.Visibility = Visibility.Collapsed;
         }
 
-        private void asbInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void asbInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            int count = BrandList.Count;
-
             //输入的名称正确，设置Brand的IsFinished为True
-            if (string.Compare(args.QueryText, CurrentBrand.Name, true) == 0)
+            if (args.QueryText == string.Empty)
+            {
+                txtMessage.Text = "Please input your answer!";
+            }
+            else if (string.Compare(args.QueryText, CurrentBrand.Name, true) == 0)
             {
                 CurrentBrand.IsFinished = true;
                 txtMessage.Text = "Congratulations!";
                 Bindings.Update();
-
                 //将更新后的数据保存到本地
-                BrandHelper.WriteBrandsToLocalAsync(BrandList);
+                await BrandHelper.WriteBrandsToLocalAsync();
             }
             else
             {
-                txtMessage.Text = "Oh, no, Come on!";
+                txtMessage.Text = "Come on!";
             }
 
             //提示动画
@@ -89,6 +111,22 @@ namespace Brand7
                     fvGaming.SelectedIndex++;
                 }
             }
+        }
+
+        private void btnCommon_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            btn.BorderThickness = new Thickness(0);
+        }
+
+        private void btnTip_Click(object sender, RoutedEventArgs e)
+        {
+            txtTip.Visibility = Visibility.Visible;
+        }
+
+        private void btnShare_Click(object sender, RoutedEventArgs e)
+        {
+            DataTransferManager.ShowShareUI();
         }
     }
 

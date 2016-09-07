@@ -7,8 +7,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+    PointerEntered="UserControl_PointerEntered"
+    PointerExited="UserControl_PointerExited"
+    PointerCaptureLost="UserControl_PointerExited">
 
     <UserControl.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -20,13 +23,11 @@
     </UserControl.Resources>
 
     <Grid Name="gdBrand" 
-          BorderThickness="1"
+          BorderThickness="0.5"
           BorderBrush="LightGray"
           Width="{x:Bind BrandModel.Size,Mode=OneWay}"
           Height="{x:Bind BrandModel.Size,Mode=OneWay}"
-          Margin="0,0,-5,-5" 
-          PointerEntered="gdBrand_PointerEntered"
-          PointerExited="gdBrand_PointerExited">
+          Margin="0,0,-5,-5" >
 
         <Image Name="imgBrand" 
                Source="{x:Bind BrandModel.Image}"
@@ -37,7 +38,7 @@
         </Image>
         <Rectangle Name="rctAnimation"
                    Fill="Black"
-                   Opacity="0.6"
+                   Opacity="0.7"
                    Visibility="Collapsed"/>
         <Rectangle Fill="Black"
                    Opacity="0.5"

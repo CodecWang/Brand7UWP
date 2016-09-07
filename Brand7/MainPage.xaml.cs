@@ -1,7 +1,5 @@
 ﻿using Brand7.Models;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
@@ -10,7 +8,6 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -21,23 +18,17 @@ namespace Brand7
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        BrandHelper BrandHelper;
-        ObservableCollection<MenuModel> MenuList;
-        ApplicationDataContainer localSettings;
-        ObservableCollection<BrandModel> BrandList;
+        BrandHelper BrandHelper = new BrandHelper();
+        ObservableCollection<MenuModel> MenuList = new ObservableCollection<MenuModel>();
+        ObservableCollection<BrandModel> BrandList = new ObservableCollection<BrandModel>();
         double lastOffset, currentOffset;
 
         public MainPage()
         {
             this.InitializeComponent();
 
+            //自定义标题栏、手机版状态栏等
             CustomizeWindow();
-
-            BrandHelper = new BrandHelper();
-            MenuList = new ObservableCollection<MenuModel>();
-            BrandList = new ObservableCollection<BrandModel>();
-            localSettings = ApplicationData.Current.LocalSettings;
-
             //注册窗口大小改变事件
             Window.Current.SizeChanged += Current_SizeChanged;
         }
@@ -46,6 +37,7 @@ namespace Brand7
         {
             pgrProcess.IsActive = true;
 
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             //判断是否是第一次启动
             if (localSettings.Values["FirstStart"] == null)
             {
@@ -56,7 +48,9 @@ namespace Brand7
 
             //初始化菜单和品牌列表
             MenuHelper.GetMenuList(MenuList);
-            await BrandHelper.GetAllBrandsAsync(BrandList);
+            await BrandHelper.GetAllBrandsAsync();
+            BrandHelper.BrandList.ToList().ForEach(p => BrandList.Add(p));
+            lstMenu.SelectedIndex = 0;
             UpdateListSize(ActualWidth);
 
             pgrProcess.IsActive = false;
@@ -72,23 +66,27 @@ namespace Brand7
             svMenu.IsPaneOpen = !svMenu.IsPaneOpen;
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            lstMenu.SelectedIndex = -1;
-            txtTitle.Text = "ALL BRANDS";
-            frmGame.Visibility = Visibility.Collapsed;
-            btnBack.Visibility = Visibility.Collapsed;
-        }
-
         private void lstMenu_ItemClick(object sender, ItemClickEventArgs e)
         {
+            pgrProcess.IsActive = true;
+
             MenuModel menu = e.ClickedItem as MenuModel;
 
+            //根据选定菜单项获取品牌列表
+            BrandHelper.GetBrandsByCategory(menu.Category);
+            BrandList.Clear();
+            BrandHelper.BrandList.ToList().ForEach(p => BrandList.Add(p));
+
+            if (frmMain.Visibility == Visibility.Visible)
+            {
+                frmMainOut.Begin();
+                rctMask.Visibility = Visibility.Collapsed;
+            }
             svMenu.IsPaneOpen = false;
             txtTitle.Text = menu.Name;
-            btnBack.Visibility = Visibility.Visible;
-            frmGame.Visibility = Visibility.Collapsed;
-            BrandHelper.GetBrandsByCategory(BrandList, menu.Category);
+            UpdateListSize(ActualWidth);
+
+            pgrProcess.IsActive = false;
         }
 
         private void gvContent_ItemClick(object sender, ItemClickEventArgs e)
@@ -96,10 +94,10 @@ namespace Brand7
             BrandModel clickedBrand = e.ClickedItem as BrandModel;
             clickedBrand.IsSelected = true;
 
-            btnBack.Visibility = Visibility.Visible;
-            frmGame.Visibility = Visibility.Visible;
-            rpTopControl.Visibility = Visibility.Visible;
-            frmGame.Navigate(typeof(Gaming), BrandList);
+            //跳转到选定品牌的游戏页面
+            frmMain.Navigate(typeof(frmGaming), BrandHelper);
+            frmMainIn.Begin();
+            rctMask.Visibility = Visibility.Visible;
         }
 
         private void btnCommon_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -108,50 +106,68 @@ namespace Brand7
             btn.BorderThickness = new Thickness(0);
         }
 
-        private void btnBack_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            btnBack.BorderThickness = new Thickness(0);
-            btnBack.Background = new SolidColorBrush(Colors.Transparent);
-        }
-
-        private void svContent_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            currentOffset = svContent.VerticalOffset;
-            if (currentOffset > lastOffset)
-            {
-                //向下滚动，隐藏顶部控件
-                rpTopControl.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                //向上滚动，显示顶部控件
-                rpTopControl.Visibility = Visibility.Visible;
-            }
-        }
-
         private void svContent_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {
             lastOffset = svContent.VerticalOffset;
         }
 
+        private void svContent_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            currentOffset = svContent.VerticalOffset;
+
+            //根据前后位移比较判断滚动方向：向上滚动，显示顶部控件；向下滚动，隐藏顶部控件
+            rpTopControl.Visibility = currentOffset > lastOffset ? Visibility.Collapsed : Visibility.Visible;
+        }
+
         /// <summary>
-        /// 自定义标题栏
+        /// 自定义页面标题栏、手机版状态栏等
         /// </summary>
         private void CustomizeWindow()
         {
-            var titleBar = CoreApplication.GetCurrentView().TitleBar;
-            var view = ApplicationView.GetForCurrentView();
-
             //将控件塞入标题栏
-            titleBar.ExtendViewIntoTitleBar = true;
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(rctTitleBar);
 
             //更改标题栏的按钮颜色
-            view.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            view.TitleBar.ButtonForegroundColor = Color.FromArgb(255, 30, 30, 30);
+            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            viewTitleBar.ButtonForegroundColor = Color.FromArgb(255, 30, 30, 30);
+
+            //隐藏手机版顶部状态栏
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.HideAsync();
+            }
         }
 
- 
+        private void rctMengban_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            frmMainOut.Begin();
+            rctMask.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            frmMain.Navigate(typeof(frmSettings));
+            frmMainIn.Begin();
+
+            svMenu.IsPaneOpen = false;
+            lstMenu.SelectedIndex = -1;
+            txtTitle.Text = "SETTINGS";
+        }
+
+        private void btnProgress_Click(object sender, RoutedEventArgs e)
+        {
+            frmMain.Navigate(typeof(frmProgress));
+            frmMainIn.Begin();
+
+            svMenu.IsPaneOpen = false;
+            lstMenu.SelectedIndex = -1;
+            txtTitle.Text = "PROGRESS";
+        }
 
         /// <summary>
         /// 更新列表中品牌的宽、高度
@@ -163,11 +179,11 @@ namespace Brand7
             int number = (int)currentWindowSize / 200;
             switch (number)
             {
-                case 1: case 2: split = 3; break;
-                case 3: case 4: split = 4; break;
-                case 5: case 6: split = 5; break;
-                case 7: case 8: split = 6; break;
-                default: split = 7; break;
+                case 1: case 2: split = 4; break;
+                case 3: case 4: split = 5; break;
+                case 5: case 6: split = 6; break;
+                case 7: case 8: split = 7; break;
+                default: split = 8; break;
             }
 
             foreach (var item in BrandList)

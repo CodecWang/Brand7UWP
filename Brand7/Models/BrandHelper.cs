@@ -12,16 +12,15 @@ namespace Brand7.Models
 {
     class BrandHelper
     {
+        public ObservableCollection<BrandModel> BrandList;
         private ObservableCollection<BrandModel> _AllBrands;
         private StorageFolder _LocalFolder;
-        ApplicationDataContainer localSettings;
-
 
         public BrandHelper()
         {
             _LocalFolder = ApplicationData.Current.LocalFolder;
             _AllBrands = new ObservableCollection<BrandModel>();
-            localSettings = ApplicationData.Current.LocalSettings;
+            BrandList = new ObservableCollection<BrandModel>();
         }
 
         /// <summary>
@@ -37,49 +36,52 @@ namespace Brand7.Models
         }
 
         /// <summary>
-        /// 获取全部品牌数据
+        /// 获取全部品牌列表
         /// </summary>
-        /// <param name="brandList">品牌数据</param>
         /// <returns></returns>
-        public async Task GetAllBrandsAsync(ObservableCollection<BrandModel> brandList)
+        public async Task GetAllBrandsAsync()
         {
-            brandList.Clear();
-            List<BrandModel> allBrands = new List<BrandModel>();
+            BrandList.Clear();
 
+            List<BrandModel> allBrands = new List<BrandModel>();
             allBrands = await ReadBrandsFromLocalAsync();
 
             foreach (var brand in allBrands)
             {
                 brand.Image = string.Format("Assets/Images/{0}/{1}.jpg", brand.Category, brand.Name);
-                brandList.Add(brand);
+                BrandList.Add(brand);
                 _AllBrands.Add(brand);
             }
         }
 
-        public void GetBrandsByCategory(ObservableCollection<BrandModel> brandList, BrandCategory category)
+        /// <summary>
+        /// 通过品牌类别来获取品牌列表
+        /// </summary>
+        /// <param name="category">品牌类别</param>
+        public void GetBrandsByCategory(BrandCategory category)
         {
-            brandList.Clear();
+            BrandList.Clear();
 
             if (category == BrandCategory.All)
             {
-                _AllBrands.ToList().ForEach(p => brandList.Add(p));
+                _AllBrands.ToList().ForEach(p => BrandList.Add(p));
             }
 
             var filter = _AllBrands.Where(p => p.Category == category.ToString()).ToList();
-            filter.ForEach(p => brandList.Add(p));
+            filter.ForEach(p => BrandList.Add(p));
         }
 
         /// <summary>
-        /// 将品牌数据写入本地文件
+        /// 将全部品牌列表写入本地文件
         /// </summary>
         /// <param name="brandList">品牌数据</param>
-        public async void WriteBrandsToLocalAsync(ObservableCollection<BrandModel> brandList)
+        public async Task WriteBrandsToLocalAsync()
         {
             StorageFile jsonFile = await _LocalFolder.GetFileAsync("Brand7DataSource.json");
 
             var serializer = new DataContractJsonSerializer(typeof(List<BrandModel>));
             var stream = new MemoryStream();
-            serializer.WriteObject(stream, brandList);
+            serializer.WriteObject(stream, _AllBrands);
 
             byte[] dataBytes = new byte[stream.Length];
             stream.Position = 0;
@@ -90,7 +92,7 @@ namespace Brand7.Models
         }
 
         /// <summary>
-        /// 从本地文件中读入品牌数据
+        /// 从本地文件中读入全部品牌列表
         /// </summary>
         /// <returns></returns>
         private async Task<List<BrandModel>> ReadBrandsFromLocalAsync()
@@ -101,7 +103,6 @@ namespace Brand7.Models
             string json = await FileIO.ReadTextAsync(jsonFile);
             var ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
             var serializer = new DataContractJsonSerializer(typeof(List<BrandModel>));
-
             all = (List<BrandModel>)serializer.ReadObject(ms);
 
             return all;

@@ -95,6 +95,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frmProgress.xaml.cs">
+      <DependentUpon>frmProgress.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettings.xaml.cs">
+      <DependentUpon>frmSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\BoolToVisibilityConverter.cs" />
     <Compile Include="BrandGamingTemplate.xaml.cs">
       <DependentUpon>BrandGamingTemplate.xaml</DependentUpon>
@@ -102,8 +108,8 @@
     <Compile Include="BrandItemTemplate.xaml.cs">
       <DependentUpon>BrandItemTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Gaming.xaml.cs">
-      <DependentUpon>Gaming.xaml</DependentUpon>
+    <Compile Include="frmGaming.xaml.cs">
+      <DependentUpon>frmGaming.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -123,9 +129,9 @@
     <None Include="Brand7_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\About.png" />
     <Content Include="Assets\finished.png" />
     <Content Include="Assets\Images\AV\A站.jpg" />
-    <Content Include="Assets\Images\AV\B站.jpg" />
     <Content Include="Assets\Images\AV\DC.jpg" />
     <Content Include="Assets\Images\AV\hulu.jpg" />
     <Content Include="Assets\Images\AV\Netflix.jpg" />
@@ -133,23 +139,26 @@
     <Content Include="Assets\Images\AV\二十世纪福克斯.jpg" />
     <Content Include="Assets\Images\AV\优酷.jpg" />
     <Content Include="Assets\Images\AV\华纳兄弟.jpg" />
-    <Content Include="Assets\Images\AV\哥伦比亚影业.jpg" />
+    <Content Include="Assets\Images\AV\哔哩哔哩.jpg" />
+    <Content Include="Assets\Images\AV\哥伦比亚.jpg" />
     <Content Include="Assets\Images\AV\土豆网.jpg" />
     <Content Include="Assets\Images\AV\梦工厂.jpg" />
     <Content Include="Assets\Images\AV\派拉蒙.jpg" />
     <Content Include="Assets\Images\AV\漫威.jpg" />
     <Content Include="Assets\Images\AV\爱奇艺.jpg" />
-    <Content Include="Assets\Images\AV\环球影业.jpg" />
+    <Content Include="Assets\Images\AV\环球.jpg" />
     <Content Include="Assets\Images\AV\皮克斯.jpg" />
     <Content Include="Assets\Images\AV\米高梅.jpg" />
     <Content Include="Assets\Images\AV\联美.jpg" />
-    <Content Include="Assets\Images\AV\蓝天工作室.jpg" />
+    <Content Include="Assets\Images\AV\蓝天.jpg" />
     <Content Include="Assets\Images\AV\迪士尼.jpg" />
+    <Content Include="Assets\Images\Car\DS.jpg" />
     <Content Include="Assets\Images\Car\Jeep.jpg" />
     <Content Include="Assets\Images\Car\MINI.jpg" />
     <Content Include="Assets\Images\Car\三菱.jpg" />
     <Content Include="Assets\Images\Car\丰田.jpg" />
     <Content Include="Assets\Images\Car\保时捷.jpg" />
+    <Content Include="Assets\Images\Car\兰博基尼.jpg" />
     <Content Include="Assets\Images\Car\凯迪拉克.jpg" />
     <Content Include="Assets\Images\Car\别克.jpg" />
     <Content Include="Assets\Images\Car\劳斯莱斯.jpg" />
@@ -157,15 +166,22 @@
     <Content Include="Assets\Images\Car\奔驰.jpg" />
     <Content Include="Assets\Images\Car\奥迪.jpg" />
     <Content Include="Assets\Images\Car\宝马.jpg" />
+    <Content Include="Assets\Images\Car\宾利.jpg" />
+    <Content Include="Assets\Images\Car\布加迪.jpg" />
     <Content Include="Assets\Images\Car\日产.jpg" />
     <Content Include="Assets\Images\Car\本田.jpg" />
     <Content Include="Assets\Images\Car\林肯.jpg" />
+    <Content Include="Assets\Images\Car\标致.jpg" />
+    <Content Include="Assets\Images\Car\法拉利.jpg" />
     <Content Include="Assets\Images\Car\特斯拉.jpg" />
     <Content Include="Assets\Images\Car\现代.jpg" />
     <Content Include="Assets\Images\Car\福特.jpg" />
     <Content Include="Assets\Images\Car\道奇.jpg" />
+    <Content Include="Assets\Images\Car\阿斯顿马丁.jpg" />
     <Content Include="Assets\Images\Car\雪佛兰.jpg" />
+    <Content Include="Assets\Images\Car\雪铁龙.jpg" />
     <Content Include="Assets\Images\Car\雷克萨斯.jpg" />
+    <Content Include="Assets\Images\Car\雷诺.jpg" />
     <Content Include="Assets\Images\Car\马自达.jpg" />
     <Content Include="Assets\Images\Cater\东方既白.jpg" />
     <Content Include="Assets\Images\Cater\伊利.jpg" />
@@ -202,7 +218,6 @@
     <Content Include="Assets\Images\Fashion\forever 21.jpg" />
     <Content Include="Assets\Images\Fashion\GAP.jpg" />
     <Content Include="Assets\Images\Fashion\H&amp;M.jpg" />
-    <Content Include="Assets\Images\Fashion\New Balance.jpg" />
     <Content Include="Assets\Images\Fashion\ZARA.jpg" />
     <Content Include="Assets\Images\Fashion\乔丹.jpg" />
     <Content Include="Assets\Images\Fashion\优衣库.jpg" />
@@ -212,6 +227,7 @@
     <Content Include="Assets\Images\Fashion\卡帕.jpg" />
     <Content Include="Assets\Images\Fashion\安踏.jpg" />
     <Content Include="Assets\Images\Fashion\彪马.jpg" />
+    <Content Include="Assets\Images\Fashion\新百伦.jpg" />
     <Content Include="Assets\Images\Fashion\普拉达.jpg" />
     <Content Include="Assets\Images\Fashion\李宁.jpg" />
     <Content Include="Assets\Images\Fashion\爱马仕.jpg" />
@@ -252,10 +268,10 @@
     <Content Include="Assets\Images\Lifestyle\金龙鱼.jpg" />
     <Content Include="Assets\Images\Lifestyle\霸王.jpg" />
     <Content Include="Assets\Images\Lifestyle\麦德龙.jpg" />
-    <Content Include="Assets\Images\Lifestyle\黑人牙膏.jpg" />
+    <Content Include="Assets\Images\Lifestyle\黑人.jpg" />
     <Content Include="Assets\Images\Tech\Adobe.jpg" />
     <Content Include="Assets\Images\Tech\Cherry.jpg" />
-    <Content Include="Assets\Images\Tech\Fackbook.jpg" />
+    <Content Include="Assets\Images\Tech\Facebook.jpg" />
     <Content Include="Assets\Images\Tech\GoPro.jpg" />
     <Content Include="Assets\Images\Tech\IBM.jpg" />
     <Content Include="Assets\Images\Tech\LG.jpg" />
@@ -264,9 +280,6 @@
     <Content Include="Assets\Images\Tech\三星.jpg" />
     <Content Include="Assets\Images\Tech\东芝.jpg" />
     <Content Include="Assets\Images\Tech\中兴.jpg" />
-    <Content Include="Assets\Images\Tech\中国电信.jpg" />
-    <Content Include="Assets\Images\Tech\中国移动.jpg" />
-    <Content Include="Assets\Images\Tech\中国联通.jpg" />
     <Content Include="Assets\Images\Tech\亚马逊.jpg" />
     <Content Include="Assets\Images\Tech\京东.jpg" />
     <Content Include="Assets\Images\Tech\人人网.jpg" />
@@ -310,17 +323,20 @@
     <Content Include="Assets\Images\Tech\柯尼卡美能达.jpg" />
     <Content Include="Assets\Images\Tech\格力.jpg" />
     <Content Include="Assets\Images\Tech\海康威视.jpg" />
-    <Content Include="Assets\Images\Tech\海思半导体.jpg" />
+    <Content Include="Assets\Images\Tech\海思.jpg" />
     <Content Include="Assets\Images\Tech\海盗船.jpg" />
     <Content Include="Assets\Images\Tech\爱国者.jpg" />
     <Content Include="Assets\Images\Tech\爱普生.jpg" />
+    <Content Include="Assets\Images\Tech\电信.jpg" />
     <Content Include="Assets\Images\Tech\百度.jpg" />
+    <Content Include="Assets\Images\Tech\移动.jpg" />
     <Content Include="Assets\Images\Tech\索尼.jpg" />
     <Content Include="Assets\Images\Tech\维基百科.jpg" />
     <Content Include="Assets\Images\Tech\网易.jpg" />
     <Content Include="Assets\Images\Tech\美的.jpg" />
     <Content Include="Assets\Images\Tech\联发科.jpg" />
     <Content Include="Assets\Images\Tech\联想.jpg" />
+    <Content Include="Assets\Images\Tech\联通.jpg" />
     <Content Include="Assets\Images\Tech\腾讯.jpg" />
     <Content Include="Assets\Images\Tech\英伟达.jpg" />
     <Content Include="Assets\Images\Tech\英特尔.jpg" />
@@ -405,7 +421,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Gaming.xaml">
+    <Page Include="frmProgress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frmSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frmGaming.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

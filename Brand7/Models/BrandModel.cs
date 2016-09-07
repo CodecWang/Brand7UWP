@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
-
-using System.Windows;
+﻿using System.Runtime.Serialization;
 using System.ComponentModel;
 
 namespace Brand7.Models
@@ -19,11 +11,17 @@ namespace Brand7.Models
         [DataMember]
         public string Name { get; set; }
         [DataMember]
+        public string PlusName { get; set; }
+        [DataMember]
         public string Country { get; set; }
         [DataMember]
         public string Category { get; set; }
         [DataMember]
+        public int Grade { get; set; }
+        [DataMember]
         public string Tip { get; set; }
+        public string Image { get; set; }
+        public bool IsSelected { get; set; }
 
         private bool _IsFinished;
         [DataMember]
@@ -33,15 +31,12 @@ namespace Brand7.Models
             {
                 return _IsFinished;
             }
-            set {
+            set
+            {
                 this._IsFinished = value;
                 notifyPropertyChanged("IsFinished");
             }
         }
-
-        public string Image { get; set; }
-        public bool IsSelected { get; set; }
-
         private double _Size;
         public double Size
         {
@@ -56,8 +51,10 @@ namespace Brand7.Models
             }
         }
 
+        /// <summary>
+        /// 实现INotifyPropertyChanged接口，通知绑定更新
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
         public void notifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

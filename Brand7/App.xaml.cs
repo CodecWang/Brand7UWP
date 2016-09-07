@@ -31,14 +31,6 @@ namespace Brand7
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            //APP手机端顶部颜色及透明度设置
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.BackgroundColor = Color.FromArgb(255, 0, 0, 0);
-                statusBar.ForegroundColor = Colors.Black;
-            }
-
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,

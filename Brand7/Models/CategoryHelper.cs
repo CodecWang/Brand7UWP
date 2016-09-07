@@ -18,16 +18,16 @@
                     name = "LIFESTYLE";
                     break;
                 case BrandCategory.Cater:
-                    name = "FOOD & CATER";
+                    name = "FOOD&CATER";
                     break;
                 case BrandCategory.AV:
-                    name = "AUDIO & VEDIO";
+                    name = "AUDIO&VEDIO";
                     break;
                 case BrandCategory.Tech:
-                    name = "IT & TECHNOLOGY";
+                    name = "IT&TECHNOLOGY";
                     break;
                 case BrandCategory.Fashion:
-                    name = "SPORTS & FASHION";
+                    name = "SPORTS&FASHION";
                     break;
                 case BrandCategory.All:
                     name = "ALL BRANDS";
