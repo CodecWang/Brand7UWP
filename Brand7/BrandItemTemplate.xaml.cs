@@ -1,4 +1,5 @@
 ﻿using Brand7.Models;
+using Windows.System.Profile;
 using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
@@ -18,13 +19,18 @@ namespace Brand7
 
         private void UserControl_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            sbImgScale.Begin();
+            //手机版不显示缩放动画
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile") return;
+
+            sbImgScaleIn.Begin();
             rctAnimation.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private void UserControl_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            sbImgScale.Stop();
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile") return;
+
+            sbImgScaleOut.Begin();
             rctAnimation.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
     }

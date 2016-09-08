@@ -4,6 +4,7 @@ using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,7 +22,7 @@ namespace Brand7
         BrandHelper BrandHelper = new BrandHelper();
         ObservableCollection<MenuModel> MenuList = new ObservableCollection<MenuModel>();
         ObservableCollection<BrandModel> BrandList = new ObservableCollection<BrandModel>();
-        double lastOffset, currentOffset;
+        double _lastOffset = 0, _currentOffset = 0;
 
         public MainPage()
         {
@@ -29,8 +30,18 @@ namespace Brand7
 
             //自定义标题栏、手机版状态栏等
             CustomizeWindow();
+
+            //注册系统后退键事件
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
+            {
+                if (frmMain.Visibility == Visibility.Visible)
+                {
+                    e.Handled = true;
+                    frmMainInOrOut(false);
+                }
+            };
             //注册窗口大小改变事件
-            Window.Current.SizeChanged += Current_SizeChanged;
+            Window.Current.SizeChanged += (s, e) => { UpdateListSize(e.Size.Width); };
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -56,11 +67,6 @@ namespace Brand7
             pgrProcess.IsActive = false;
         }
 
-        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
-        {
-            UpdateListSize(e.Size.Width);
-        }
-
         private void btnHamburger_Click(object sender, RoutedEventArgs e)
         {
             svMenu.IsPaneOpen = !svMenu.IsPaneOpen;
@@ -79,8 +85,7 @@ namespace Brand7
 
             if (frmMain.Visibility == Visibility.Visible)
             {
-                frmMainOut.Begin();
-                rctMask.Visibility = Visibility.Collapsed;
+                frmMainInOrOut(false);
             }
             svMenu.IsPaneOpen = false;
             txtTitle.Text = menu.Name;
@@ -91,13 +96,14 @@ namespace Brand7
 
         private void gvContent_ItemClick(object sender, ItemClickEventArgs e)
         {
+ 
+            
             BrandModel clickedBrand = e.ClickedItem as BrandModel;
             clickedBrand.IsSelected = true;
 
             //跳转到选定品牌的游戏页面
             frmMain.Navigate(typeof(frmGaming), BrandHelper);
-            frmMainIn.Begin();
-            rctMask.Visibility = Visibility.Visible;
+            frmMainInOrOut(true);
         }
 
         private void btnCommon_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -108,15 +114,15 @@ namespace Brand7
 
         private void svContent_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {
-            lastOffset = svContent.VerticalOffset;
+            _lastOffset = svContent.VerticalOffset;
         }
 
         private void svContent_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            currentOffset = svContent.VerticalOffset;
+            _currentOffset = svContent.VerticalOffset;
 
             //根据前后位移比较判断滚动方向：向上滚动，显示顶部控件；向下滚动，隐藏顶部控件
-            rpTopControl.Visibility = currentOffset > lastOffset ? Visibility.Collapsed : Visibility.Visible;
+            rpTopControl.Visibility = _currentOffset > _lastOffset ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
@@ -145,14 +151,13 @@ namespace Brand7
 
         private void rctMengban_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            frmMainOut.Begin();
-            rctMask.Visibility = Visibility.Collapsed;
+            frmMainInOrOut(false);
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             frmMain.Navigate(typeof(frmSettings));
-            frmMainIn.Begin();
+            frmMainInOrOut(true);
 
             svMenu.IsPaneOpen = false;
             lstMenu.SelectedIndex = -1;
@@ -162,11 +167,33 @@ namespace Brand7
         private void btnProgress_Click(object sender, RoutedEventArgs e)
         {
             frmMain.Navigate(typeof(frmProgress));
-            frmMainIn.Begin();
+            frmMainInOrOut(true);
 
             svMenu.IsPaneOpen = false;
             lstMenu.SelectedIndex = -1;
             txtTitle.Text = "PROGRESS";
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            bool isIn = frmMain.Visibility == Visibility.Collapsed ? true : false;
+            frmMainInOrOut(isIn);
+        }
+
+        private void frmMainInOrOut(bool isIn)
+        {
+            if (isIn)
+            {
+                frmMainIn.Begin();
+                btnBack.Visibility = Visibility.Visible;
+                rctMask.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                frmMainOut.Begin();
+                btnBack.Visibility = Visibility.Collapsed;
+                rctMask.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -179,11 +206,11 @@ namespace Brand7
             int number = (int)currentWindowSize / 200;
             switch (number)
             {
-                case 1: case 2: split = 4; break;
-                case 3: case 4: split = 5; break;
-                case 5: case 6: split = 6; break;
-                case 7: case 8: split = 7; break;
-                default: split = 8; break;
+                case 1: case 2: split = 3; break;
+                case 3: case 4: split = 4; break;
+                case 5: case 6: split = 5; break;
+                case 7: case 8: split = 6; break;
+                default: split = 7; break;
             }
 
             foreach (var item in BrandList)

@@ -43,15 +43,19 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <StackPanel Name="spSettings" 
-                    Margin="0,20,10,0" 
-                    Grid.ColumnSpan="3" >
+        <StackPanel Name="spSettings" Margin="0,20,10,0" Grid.ColumnSpan="3" >
 
             <StackPanel Margin="10,0,0,0">
                 <TextBlock Text="SETTINGS" Style="{StaticResource TxtLargeTitleStyle}"/>
-                <RelativePanel>
-                    <TextBlock Text="ENABLE ALL BRANDS" RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                    <ToggleSwitch RelativePanel.AlignRightWithPanel="True" Margin="0,0,-75,0">
+                <Button Name="btnInitData"
+                        Background="#F6626E"
+                        BorderThickness="0"
+                        Content="INIT ALL DATA"
+                        Style="{StaticResource BtnTransparentStyle}"
+                        Click="btnInitData_Click"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="ENABLE ALL BRANDS" FontSize="14" VerticalAlignment="Center"/>
+                    <ToggleSwitch RelativePanel.AlignRightWithPanel="True" Margin="20,0,0,0">
                         <ToggleSwitch.OnContent>
                             <TextBlock Text="On"/>
                         </ToggleSwitch.OnContent>
@@ -59,14 +63,7 @@
                             <TextBlock Text="Off"/>
                         </ToggleSwitch.OffContent>
                     </ToggleSwitch>
-                </RelativePanel>
-                <Button Name="btnInitData"
-                        Background="#F6626E"
-                        BorderThickness="0"
-                        HorizontalAlignment="Stretch"
-                        Content="INIT ALL DATA"
-                        Style="{StaticResource BtnTransparentStyle}"
-                        Click="btnInitData_Click"/>
+                </StackPanel>
 
                 <TextBlock Text="FEEDBACK" Style="{StaticResource TxtLargeTitleStyle}"/>
                 <StackPanel Orientation="Horizontal">
@@ -80,13 +77,14 @@
                 <TextBlock Text="DECLARATION" Style="{StaticResource TxtLargeTitleStyle}"/>
                 <TextBlock Text="All brand images are from the internet." FontSize="14"/>
             </StackPanel>
-            
-            <Image Width="200"
-                   Height="200"
+
+            <Image Width="180"
+                   Height="180"
+                   Margin="0,10,0,0"
                    HorizontalAlignment="Left"
                    Stretch="UniformToFill" 
                    Source="Assets/About.png"/>
         </StackPanel>
-    </Grid>   
+    </Grid>
 
 </Page>

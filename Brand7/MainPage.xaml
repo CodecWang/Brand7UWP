@@ -30,13 +30,12 @@
             <Setter Property="Width" Value="65"/>
             <Setter Property="Height" Value="65"/>
         </Style>
-
         <Style x:Key="BtnBackStyle" TargetType="Button">
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
             <Setter Property="Content" Value="&#xE0A6;"/>
             <Setter Property="Width" Value="65"/>
             <Setter Property="Height" Value="65"/>
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="Background" Value="#F2F2F2"/>
         </Style>
         <Style x:Key="TxtAppNameStyle" TargetType="TextBlock" BasedOn="{StaticResource TxtLargeCommonBase}">
             <Setter Property="Text" Value="BRAND7"/>
@@ -51,12 +50,12 @@
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="frmMain" Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
             </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimation Duration="0:0:0.4" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="frmMain" >
+            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.4" To="1" >
                 <DoubleAnimation.EasingFunction>
                     <QuadraticEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <DoubleAnimation Duration="0:0:0.4" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="frmMain" >
+            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Duration="0:0:0.4" To="1" >
                 <DoubleAnimation.EasingFunction>
                     <QuadraticEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
@@ -66,12 +65,12 @@
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="frmMain" Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="Collapsed" />
             </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimation Duration="0:0:0.4" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="frmMain" >
+            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.4" To="0" >
                 <DoubleAnimation.EasingFunction>
                     <QuadraticEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <DoubleAnimation Duration="0:0:0.4" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="frmMain" >
+            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Duration="0:0:0.4" To="0" >
                 <DoubleAnimation.EasingFunction>
                     <QuadraticEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
@@ -127,17 +126,24 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <RelativePanel Name="rpTopControl">
+                <RelativePanel Name="rpTopControl" Background="#F2F2F2">
                     <Button Name="btnHamburger" 
                             Style="{StaticResource BtnHamburgerStyle}"
                             RelativePanel.AlignLeftWithPanel="True"
                             Click="btnHamburger_Click" 
                             PointerEntered="btnCommon_PointerEntered"/>
+                    <Button Name="btnBack"
+                            Style="{StaticResource BtnBackStyle}"
+                            Visibility="Collapsed"
+                            RelativePanel.RightOf="btnHamburger"
+                            Click="btnBack_Click"
+                            PointerEntered="btnCommon_PointerEntered"/>
                     <Rectangle Name="rctTitleBar" 
-                               Fill="#F2F2F2"
+                               Fill="Transparent"
                                Height="65"
                                RelativePanel.AlignRightWithPanel="True"
-                               RelativePanel.RightOf="btnHamburger"/>
+                               Margin="0,0,140,0"
+                               RelativePanel.RightOf="btnBack"/>
                     <TextBlock Name="txtTitle"
                                Text="ALL BRANDS"
                                Style="{StaticResource TxtLargeCommonBase}"
@@ -151,7 +157,6 @@
                               ViewChanging="svContent_ViewChanging"
                               ViewChanged="svContent_ViewChanged">
                     <GridView Name="gvContent" 
-                              ShowsScrollingPlaceholders="True"
                               ItemsSource="{x:Bind BrandList}"
                               SelectionMode="None"
                               IsItemClickEnabled="True"
@@ -163,7 +168,7 @@
                         </GridView.ItemTemplate>
                     </GridView>
                 </ScrollViewer>
-                
+
                 <Rectangle Name="rctMask" 
                            Grid.Row="1" 
                            Fill="White" 

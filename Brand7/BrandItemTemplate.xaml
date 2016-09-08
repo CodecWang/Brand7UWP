@@ -10,27 +10,31 @@
     d:DesignHeight="400"
     d:DesignWidth="400"
     PointerEntered="UserControl_PointerEntered"
-    PointerExited="UserControl_PointerExited"
-    PointerCaptureLost="UserControl_PointerExited">
+    PointerExited="UserControl_PointerExited">
 
     <UserControl.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
-        <Storyboard x:Name="sbImgScale">
-            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleX" To="1.05" Duration="0:0:0.3" />
-            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleY" To="1.05"  Duration="0:0:0.3" />
+        <Storyboard x:Name="sbImgScaleIn">
+            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleX" To="1.15" Duration="0:0:0.25" />
+            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleY" To="1.15"  Duration="0:0:0.25" />
+        </Storyboard>
+        <Storyboard x:Name="sbImgScaleOut">
+            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.25" />
+            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleY" To="1"  Duration="0:0:0.25" />
         </Storyboard>
     </UserControl.Resources>
 
     <Grid Name="gdBrand" 
+          Margin="0,0,-5,-5"
           BorderThickness="0.5"
           BorderBrush="LightGray"
           Width="{x:Bind BrandModel.Size,Mode=OneWay}"
-          Height="{x:Bind BrandModel.Size,Mode=OneWay}"
-          Margin="0,0,-5,-5" >
+          Height="{x:Bind BrandModel.Size,Mode=OneWay}">
 
         <Image Name="imgBrand" 
                Source="{x:Bind BrandModel.Image}"
+               RenderTransformOrigin="0.5,0.5"
                Stretch="UniformToFill">
             <Image.RenderTransform>
                 <ScaleTransform x:Name="imgBrandScale"/>
@@ -38,7 +42,7 @@
         </Image>
         <Rectangle Name="rctAnimation"
                    Fill="Black"
-                   Opacity="0.7"
+                   Opacity="0.2"
                    Visibility="Collapsed"/>
         <Rectangle Fill="Black"
                    Opacity="0.5"

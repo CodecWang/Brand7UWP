@@ -36,8 +36,8 @@
     <Grid Name="gdGaming" 
           Height="600" 
           Background="White"
-          BorderThickness="0.5"
-          BorderBrush="#D2D2D2">
+          BorderThickness="0.8"
+          BorderBrush="LightGray">
 
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -63,6 +63,7 @@
                         <Setter Target="spInputArea.(Grid.Column)" Value="1"/>
                         <Setter Target="spInputArea.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="spInputArea.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="bdMessage.VerticalAlignment" Value="Top"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Wide">
@@ -81,6 +82,7 @@
                         <Setter Target="spInputArea.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="spInputArea.(Grid.ColumnSpan)" Value="1"/>
                         <Setter Target="bdMessage.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="bdMessage.VerticalAlignment" Value="Top"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="SuperWide">
@@ -99,6 +101,7 @@
                         <Setter Target="spInputArea.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="spInputArea.(Grid.ColumnSpan)" Value="1"/>
                         <Setter Target="bdMessage.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="bdMessage.VerticalAlignment" Value="Top"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -186,7 +189,7 @@
 
         <Border Name="bdMessage"
                 Background="Black"
-                VerticalAlignment="Top"
+                VerticalAlignment="Bottom"
                 Grid.ColumnSpan="2"
                 Height="65"
                 Padding="15"
