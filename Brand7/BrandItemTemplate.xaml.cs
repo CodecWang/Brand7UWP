@@ -23,7 +23,7 @@ namespace Brand7
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile") return;
 
             sbImgScaleIn.Begin();
-            rctAnimation.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            gdBrand.Opacity = 0.3;
         }
 
         private void UserControl_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -31,7 +31,7 @@ namespace Brand7
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile") return;
 
             sbImgScaleOut.Begin();
-            rctAnimation.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            gdBrand.Opacity = 1;
         }
     }
 }

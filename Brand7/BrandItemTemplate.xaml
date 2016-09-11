@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="400"
+    d:DesignHeight="200"
     d:DesignWidth="400"
     PointerEntered="UserControl_PointerEntered"
     PointerExited="UserControl_PointerExited">
@@ -26,11 +26,16 @@
     </UserControl.Resources>
 
     <Grid Name="gdBrand" 
-          Margin="0,0,-5,-5"
           BorderThickness="0.5"
           BorderBrush="LightGray"
           Width="{x:Bind BrandModel.Size,Mode=OneWay}"
           Height="{x:Bind BrandModel.Size,Mode=OneWay}">
+
+        <Grid.Transitions>
+            <TransitionCollection>
+                <PaneThemeTransition/>
+            </TransitionCollection>
+        </Grid.Transitions>
 
         <Image Name="imgBrand" 
                Source="{x:Bind BrandModel.Image}"
@@ -40,17 +45,13 @@
                 <ScaleTransform x:Name="imgBrandScale"/>
             </Image.RenderTransform>
         </Image>
-        <Rectangle Name="rctAnimation"
-                   Fill="Black"
-                   Opacity="0.2"
-                   Visibility="Collapsed"/>
-        <Rectangle Fill="Black"
+        <Rectangle x:Name="rct" Fill="Black"
                    Opacity="0.5"
                    Visibility="{x:Bind BrandModel.IsFinished,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
-        <Image Name="imgFinish" 
+        <Image x:Name="imgFinish" 
                Source="Assets/finished.png"
-               Width="90"
-               Height="90"
+               Width="75"
+               Height="75"
                HorizontalAlignment="Right"
                VerticalAlignment="Bottom"
                Visibility="{x:Bind BrandModel.IsFinished,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>

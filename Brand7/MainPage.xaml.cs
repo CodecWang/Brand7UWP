@@ -1,13 +1,16 @@
 ﻿using Brand7.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -89,40 +92,14 @@ namespace Brand7
             }
             svMenu.IsPaneOpen = false;
             txtTitle.Text = menu.Name;
-            UpdateListSize(ActualWidth);
 
             pgrProcess.IsActive = false;
-        }
-
-        private void gvContent_ItemClick(object sender, ItemClickEventArgs e)
-        {
- 
-            
-            BrandModel clickedBrand = e.ClickedItem as BrandModel;
-            clickedBrand.IsSelected = true;
-
-            //跳转到选定品牌的游戏页面
-            frmMain.Navigate(typeof(frmGaming), BrandHelper);
-            frmMainInOrOut(true);
         }
 
         private void btnCommon_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             Button btn = sender as Button;
             btn.BorderThickness = new Thickness(0);
-        }
-
-        private void svContent_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
-        {
-            _lastOffset = svContent.VerticalOffset;
-        }
-
-        private void svContent_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            _currentOffset = svContent.VerticalOffset;
-
-            //根据前后位移比较判断滚动方向：向上滚动，显示顶部控件；向下滚动，隐藏顶部控件
-            rpTopControl.Visibility = _currentOffset > _lastOffset ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
@@ -196,6 +173,30 @@ namespace Brand7
             }
         }
 
+        private void lstCont_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var img = (Image)e.OriginalSource;
+            BrandModel clickedBrand = img.DataContext as BrandModel;
+            clickedBrand.IsSelected = true;
+
+            //跳转到选定品牌的游戏页面
+            frmMain.Navigate(typeof(frmGaming), BrandHelper);
+            frmMainInOrOut(true);
+        }
+
+        private void svContent_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
+        {
+            _lastOffset = svContent.VerticalOffset;
+        }
+
+        private void svContent_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            _currentOffset = svContent.VerticalOffset;
+
+            //根据前后位移比较判断滚动方向：向上滚动，显示顶部控件；向下滚动，隐藏顶部控件
+            rpTopControl.Visibility = _currentOffset > _lastOffset ? Visibility.Collapsed : Visibility.Visible;
+        }
+
         /// <summary>
         /// 更新列表中品牌的宽、高度
         /// </summary>
@@ -215,7 +216,7 @@ namespace Brand7
 
             foreach (var item in BrandList)
             {
-                item.Size = currentWindowSize / split;
+                item.Size = (int)currentWindowSize / split;
             }
         }
     }

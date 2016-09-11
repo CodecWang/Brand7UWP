@@ -52,12 +52,12 @@
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.4" To="1" >
                 <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseIn"/>
+                    <SineEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
             <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Duration="0:0:0.4" To="1" >
                 <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseIn"/>
+                    <SineEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
@@ -67,12 +67,12 @@
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.4" To="0" >
                 <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseOut"/>
+                    <SineEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
             <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Duration="0:0:0.4" To="0" >
                 <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseOut"/>
+                    <SineEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
@@ -152,21 +152,24 @@
                 </RelativePanel>
 
                 <ScrollViewer Name="svContent" 
-                              Grid.Row="1" 
+                              Grid.Row="1"
                               VerticalScrollBarVisibility="Hidden"
                               ViewChanging="svContent_ViewChanging"
                               ViewChanged="svContent_ViewChanged">
-                    <GridView Name="gvContent" 
-                              ItemsSource="{x:Bind BrandList}"
-                              SelectionMode="None"
-                              IsItemClickEnabled="True"
-                              ItemClick="gvContent_ItemClick">
-                        <GridView.ItemTemplate>
+                    <ItemsControl Name="lstCont" 
+                                  ItemsSource="{x:Bind BrandList}"
+                                  Tapped="lstCont_Tapped">
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:BrandModel">
                                 <local:BrandItemTemplate />
                             </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                 </ScrollViewer>
 
                 <Rectangle Name="rctMask" 
