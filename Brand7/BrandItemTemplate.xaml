@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="200"
+    d:DesignHeight="400"
     d:DesignWidth="400"
     PointerEntered="UserControl_PointerEntered"
     PointerExited="UserControl_PointerExited">
@@ -16,8 +16,8 @@
         <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
         <Storyboard x:Name="sbImgScaleIn">
-            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleX" To="1.15" Duration="0:0:0.25" />
-            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleY" To="1.15"  Duration="0:0:0.25" />
+            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleX" To="1.05" Duration="0:0:0.25" />
+            <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleY" To="1.05"  Duration="0:0:0.25" />
         </Storyboard>
         <Storyboard x:Name="sbImgScaleOut">
             <DoubleAnimation Storyboard.TargetName="imgBrandScale" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.25" />
@@ -31,29 +31,14 @@
           Width="{x:Bind BrandModel.Size,Mode=OneWay}"
           Height="{x:Bind BrandModel.Size,Mode=OneWay}">
 
-        <Grid.Transitions>
-            <TransitionCollection>
-                <PaneThemeTransition/>
-            </TransitionCollection>
-        </Grid.Transitions>
-
         <Image Name="imgBrand" 
                Source="{x:Bind BrandModel.Image}"
-               RenderTransformOrigin="0.5,0.5"
-               Stretch="UniformToFill">
+               RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <ScaleTransform x:Name="imgBrandScale"/>
             </Image.RenderTransform>
         </Image>
-        <Rectangle x:Name="rct" Fill="Black"
-                   Opacity="0.5"
-                   Visibility="{x:Bind BrandModel.IsFinished,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
-        <Image x:Name="imgFinish" 
-               Source="Assets/finished.png"
-               Width="75"
-               Height="75"
-               HorizontalAlignment="Right"
-               VerticalAlignment="Bottom"
+        <Image Source="Assets/Okay.png"
                Visibility="{x:Bind BrandModel.IsFinished,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
     </Grid>
 

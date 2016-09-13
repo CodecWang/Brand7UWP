@@ -1,0 +1,6 @@
+MainPackage=D:\ex2tron\Documents\Code\Brand7\Brand7\bin\x64\Debug\Brand7_0.8.0.0_x64_Debug.appx
+SymbolPackage=D:\ex2tron\Documents\Code\Brand7\Brand7\AppPackages\Brand7_0.8.0.0_Debug_Test\Brand7_0.8.0.0_x64_Debug.appxsym
+ResourcePack=D:\ex2tron\Documents\Code\Brand7\Brand7\bin\x64\Debug\Brand7_0.8.0.0_scale-100.appx
+ResourcePack=D:\ex2tron\Documents\Code\Brand7\Brand7\bin\x64\Debug\Brand7_0.8.0.0_scale-125.appx
+ResourcePack=D:\ex2tron\Documents\Code\Brand7\Brand7\bin\x64\Debug\Brand7_0.8.0.0_scale-150.appx
+ResourcePack=D:\ex2tron\Documents\Code\Brand7\Brand7\bin\x64\Debug\Brand7_0.8.0.0_scale-400.appx

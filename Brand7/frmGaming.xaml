@@ -13,32 +13,19 @@
         <local:BoolOppositeVisibilityConverter x:Key="BoolOppositeVisibilityConverter"/>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
-        <Storyboard x:Name="SbMessage" Completed="SbMessage_Completed">
-            <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True"
-                                           Storyboard.TargetName="bdMessage"
-                                           Storyboard.TargetProperty="Opacity">
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.1" Value="0.2"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.2" Value="0.4"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.3" Value="0.6"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.4" Value="0.8"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:1.5" Value="1"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:1.6" Value="0.8"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:1.7" Value="0.6"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:1.8" Value="0.4"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:1.9" Value="0.2"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:2" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
+        <Storyboard x:Name="MessageIn" Completed="MessageIn_Completed">
+            <DoubleAnimation Storyboard.TargetName="bdMessage" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.8"/>
+        </Storyboard>
+        <Storyboard x:Name="MessageOut" Completed="MessageOut_Completed">
+            <DoubleAnimation Storyboard.TargetName="bdMessage" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.6" From="1" To="0" Duration="0:0:0.4"/>
         </Storyboard>
     </Page.Resources>
 
     <Grid Name="gdGaming" 
           Height="600" 
           Background="White"
-          BorderThickness="0.8"
+          BorderThickness="1"
           BorderBrush="LightGray">
-
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="auto"/>
@@ -47,7 +34,6 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Middle">
@@ -122,7 +108,11 @@
         <Grid Name="spInputArea" 
               Grid.Row="1"
               Grid.ColumnSpan="2">
-
+            <Grid.ChildrenTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition/>
+                </TransitionCollection>
+            </Grid.ChildrenTransitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition />
@@ -172,7 +162,11 @@
             </Grid>
 
             <StackPanel Margin="15,15,0,10" Visibility="{x:Bind CurrentBrand.IsFinished,Converter={StaticResource BoolToVisibilityConverter}}">
-                <TextBlock FontSize="30" FontWeight="Bold" Text="{x:Bind CurrentBrand.Name}"/>
+                <HyperlinkButton Name="hlbtnWiki" 
+                                 FontSize="30" 
+                                 FontWeight="Bold" 
+                                 Content="{x:Bind CurrentBrand.Name}"
+                                 Click="hlbtnWiki_Click"/>
                 <TextBlock Text="{x:Bind CurrentBrand.PlusName}" FontSize="24" Margin="0,5"/>
                 <TextBlock Text="{x:Bind CurrentBrand.Country}" FontSize="18" Margin="0,0,0,5"/>
                 <TextBlock Text="{x:Bind CurrentBrand.Tip}" FontSize="14" TextWrapping="Wrap"/>
@@ -188,7 +182,7 @@
         </Grid>
 
         <Border Name="bdMessage"
-                Background="Black"
+                Background="{ThemeResource SystemAccentColor}"
                 VerticalAlignment="Bottom"
                 Grid.ColumnSpan="2"
                 Height="65"
@@ -196,7 +190,5 @@
                 Opacity="0">
             <TextBlock Name="txtMessage" Foreground="White" FontSize="20"/>
         </Border>
-
     </Grid>
-
 </Page>

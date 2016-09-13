@@ -6,10 +6,15 @@ namespace Brand7.Models
     [DataContract]
     class BrandModel : INotifyPropertyChanged
     {
+        private double _Size;
+        private bool _IsFinished;
+
         [DataMember]
         public int ID { get; set; }
         [DataMember]
         public string Name { get; set; }
+        [DataMember]
+        public string KeyName { get; set; }
         [DataMember]
         public string PlusName { get; set; }
         [DataMember]
@@ -20,10 +25,6 @@ namespace Brand7.Models
         public int Grade { get; set; }
         [DataMember]
         public string Tip { get; set; }
-        public string Image { get; set; }
-        public bool IsSelected { get; set; }
-
-        private bool _IsFinished;
         [DataMember]
         public bool IsFinished
         {
@@ -37,7 +38,8 @@ namespace Brand7.Models
                 notifyPropertyChanged("IsFinished");
             }
         }
-        private double _Size;
+
+        public string Image { get; set; }
         public double Size
         {
             get

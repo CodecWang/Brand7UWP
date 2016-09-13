@@ -28,6 +28,7 @@ namespace Brand7
 
         private void UserControl_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            //手机版不显示缩放动画
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile") return;
 
             sbImgScaleOut.Begin();

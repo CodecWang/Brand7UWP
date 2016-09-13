@@ -1,8 +1,8 @@
 ﻿using Brand7.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -19,21 +19,17 @@ namespace Brand7
     {
         BrandHelper BrandHelper;
         BrandModel CurrentBrand;
-        ObservableCollection<BrandModel> BrandList = new ObservableCollection<BrandModel>();
+        ObservableCollection<BrandModel> BrandList;
 
         public frmGaming()
         {
             this.InitializeComponent();
         }
 
-        /// <summary>
-        /// 接收从上一页传过来的参数
-        /// </summary>
-        /// <param name="e">页面参数</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            BrandHelper = (BrandHelper)e.Parameter;
-            BrandHelper.BrandList.ToList().ForEach(p => BrandList.Add(p));
+            BrandHelper = e.Parameter as BrandHelper;
+            BrandList = BrandHelper.BrandList;
             DataTransferManager.GetForCurrentView().DataRequested += Gaming_DataRequested;
         }
 
@@ -44,17 +40,10 @@ namespace Brand7
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //根据IsSelected获取当前的Brand
-            CurrentBrand = BrandList.FirstOrDefault(p => p.IsSelected == true);
-            fvGaming.SelectedIndex = BrandList.IndexOf(CurrentBrand);
-            CurrentBrand.IsSelected = false;
+            CurrentBrand = BrandHelper.CurrentBrand;
+            fvGaming.SelectedItem = CurrentBrand;
         }
 
-        /// <summary>
-        /// 共享（求助）功能
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         private void Gaming_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
             var deferral = args.Request.GetDeferral();
@@ -80,37 +69,19 @@ namespace Brand7
         private async void asbInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             //输入的名称正确，设置Brand的IsFinished为True
-            if (args.QueryText == string.Empty)
-            {
-                txtMessage.Text = "Please input your answer!";
-            }
-            else if (string.Compare(args.QueryText, CurrentBrand.Name, true) == 0)
+            if (args.QueryText == string.Empty) txtMessage.Text = "( ╯□╰ )YOUR ANSWER?";
+            else if (IsAnswerRight(args.QueryText, CurrentBrand))
             {
                 CurrentBrand.IsFinished = true;
-                txtMessage.Text = "Congratulations!";
+                txtMessage.Text = "( •̀ ω •́ )BINGO!!!";
                 Bindings.Update();
                 //将更新后的数据保存到本地
                 await BrandHelper.WriteBrandsToLocalAsync();
             }
-            else
-            {
-                txtMessage.Text = "Come on!";
-            }
+            else txtMessage.Text = "( ╯□╰ )Whoops!";
 
             //提示动画
-            SbMessage.Begin();
-        }
-
-        private void SbMessage_Completed(object sender, object e)
-        {
-            //提示动画结束时，若输入正确，则跳转至下一项
-            if (CurrentBrand.IsFinished)
-            {
-                if (BrandList.IndexOf(CurrentBrand) + 1 < BrandList.Count)
-                {
-                    fvGaming.SelectedIndex++;
-                }
-            }
+            MessageIn.Begin();
         }
 
         private void btnCommon_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -127,6 +98,43 @@ namespace Brand7
         private void btnShare_Click(object sender, RoutedEventArgs e)
         {
             DataTransferManager.ShowShareUI();
+        }
+
+        private void MessageIn_Completed(object sender, object e)
+        {
+            MessageOut.Begin();
+        }
+
+        private void MessageOut_Completed(object sender, object e)
+        {
+            //提示动画结束时，若输入正确，则跳转至下一项
+            if (CurrentBrand.IsFinished)
+            {
+                if (BrandList.IndexOf(CurrentBrand) + 1 < BrandList.Count)
+                {
+                    fvGaming.SelectedIndex++;
+                }
+            }
+        }
+
+        private async void hlbtnWiki_Click(object sender, RoutedEventArgs e)
+        {
+            Uri wiki = new Uri(string.Format("http://baike.baidu.com/search/word?word={0}", hlbtnWiki.Content));
+            await Launcher.LaunchUriAsync(wiki);
+        }
+
+        /// <summary>
+        /// 判断输入的答案是否正确
+        /// </summary>
+        /// <param name="answer">答案</param>
+        /// <param name="brand">当前品牌</param>
+        /// <returns></returns>
+        private bool IsAnswerRight(string answer, BrandModel brand)
+        {
+            if (string.Compare(answer, brand.KeyName, true) == 0) return true;
+            if (string.Compare(answer, brand.PlusName, true) == 0) return true;
+            if (string.Compare(answer, brand.Name, true) == 0) return true;
+            return false;
         }
     }
 

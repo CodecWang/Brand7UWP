@@ -47,78 +47,75 @@
         </DataTemplate>
 
         <Storyboard x:Name="frmMainIn">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="frmMain" Storyboard.TargetProperty="Visibility">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
-            </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.4" To="1" >
+            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.5" From="0" To="1" >
                 <DoubleAnimation.EasingFunction>
-                    <SineEase EasingMode="EaseIn"/>
+                    <QuinticEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Duration="0:0:0.4" To="1" >
+            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Duration="0:0:0.5" From="0" To="1" >
                 <DoubleAnimation.EasingFunction>
-                    <SineEase EasingMode="EaseIn"/>
+                    <QuinticEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
         <Storyboard x:Name="frmMainOut">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="frmMain" Storyboard.TargetProperty="Visibility">
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="Collapsed" />
+            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.5" To="0" >
+                <DoubleAnimation.EasingFunction>
+                    <QuinticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Duration="0:0:0.5" To="0" >
+                <DoubleAnimation.EasingFunction>
+                    <QuinticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="rctMaskIn">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="rctMask" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="Visible" />
             </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.4" To="0" >
-                <DoubleAnimation.EasingFunction>
-                    <SineEase EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Duration="0:0:0.4" To="0" >
-                <DoubleAnimation.EasingFunction>
-                    <SineEase EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="rctMask" Storyboard.TargetProperty="Opacity" From="0" To="0.9" Duration="0:0:0.4"/>
+        </Storyboard>
+        <Storyboard x:Name="rctMaskOut">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="rctMask" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="Collapsed" />
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="rctMask" Storyboard.TargetProperty="Opacity" From="0.9" To="0" Duration="0:0:0.5"/>
         </Storyboard>
     </Page.Resources>
 
     <SplitView Name="svMenu" DisplayMode="Overlay" OpenPaneLength="300">
         <SplitView.Pane>
-            <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                <RelativePanel>
-                    <TextBlock Name="txtAppName" Style="{StaticResource TxtAppNameStyle}"/>
-                    <ListView Name="lstMenu" 
-                              Width="300"
-                              RelativePanel.Below="txtAppName"
-                              ItemsSource="{x:Bind MenuList}" 
-                              ItemTemplate="{StaticResource MenuItemTemplate}"
-                              IsItemClickEnabled="True"
-                              ItemClick="lstMenu_ItemClick"/>
-                    <StackPanel RelativePanel.Below="lstMenu"
-                                RelativePanel.AlignBottomWithPanel="True"
-                                VerticalAlignment="Bottom"
-                                Orientation="Horizontal">
-                        <Button Name="btnProgress" 
-                                Width="150"  
-                                Background="Transparent" 
-                                Click="btnProgress_Click"
-                                PointerEntered="btnCommon_PointerEntered">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE13D;" Margin="0,10,10,10"/>
-                                <TextBlock Text="PROGRESS" Style="{StaticResource TxtSmallCommonBase}"/>
-                            </StackPanel>
-                        </Button>
-                        <Button Name="btnSettings" 
-                                Width="150" 
-                                Background="Transparent" 
-                                Click="btnSettings_Click"
-                                PointerEntered="btnCommon_PointerEntered">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" Margin="0,10,10,10"/>
-                                <TextBlock Text="SETTINGS" Style="{StaticResource TxtSmallCommonBase}"/>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                </RelativePanel>
-            </ScrollViewer>
-        </SplitView.Pane>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
+                <TextBlock Name="txtAppName" Style="{StaticResource TxtAppNameStyle}" HorizontalAlignment="Left"/>
+                <ListView Name="lstMenu" 
+                          Grid.Row="1"
+                          Width="300"
+                          ItemsSource="{x:Bind MenuList}" 
+                          ItemTemplate="{StaticResource MenuItemTemplate}"
+                          IsItemClickEnabled="True"
+                          ItemClick="lstMenu_ItemClick"/>
+                <Button Name="btnSettings" 
+                        Grid.Row="3"
+                        Width="300" 
+                        VerticalAlignment="Bottom"
+                        Background="Transparent" 
+                        Click="btnSettings_Click"
+                        PointerEntered="btnCommon_PointerEntered">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" Margin="0,10,10,10"/>
+                        <TextBlock Text="SETTINGS" Style="{StaticResource TxtSmallCommonBase}"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </SplitView.Pane>
         <SplitView.Content>
             <Grid>
                 <Grid.RowDefinitions>
@@ -127,6 +124,11 @@
                 </Grid.RowDefinitions>
 
                 <RelativePanel Name="rpTopControl" Background="#F2F2F2">
+                    <RelativePanel.Transitions>
+                        <TransitionCollection>
+                            <RepositionThemeTransition/>
+                        </TransitionCollection>
+                    </RelativePanel.Transitions>
                     <Button Name="btnHamburger" 
                             Style="{StaticResource BtnHamburgerStyle}"
                             RelativePanel.AlignLeftWithPanel="True"
@@ -150,20 +152,24 @@
                                RelativePanel.AlignHorizontalCenterWithPanel="True"
                                RelativePanel.AlignVerticalCenterWithPanel="True"/>
                 </RelativePanel>
-
                 <ScrollViewer Name="svContent" 
                               Grid.Row="1"
                               VerticalScrollBarVisibility="Hidden"
                               ViewChanging="svContent_ViewChanging"
                               ViewChanged="svContent_ViewChanged">
-                    <ItemsControl Name="lstCont" 
+                    <ItemsControl Name="lstContent" 
                                   ItemsSource="{x:Bind BrandList}"
-                                  Tapped="lstCont_Tapped">
+                                  Tapped="lstContent_Tapped">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:BrandModel">
                                 <local:BrandItemTemplate />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerTransitions>
+                            <TransitionCollection>
+                                <PaneThemeTransition/>
+                            </TransitionCollection>
+                        </ItemsControl.ItemContainerTransitions>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid Orientation="Horizontal"/>
@@ -171,13 +177,11 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </ScrollViewer>
-
                 <Rectangle Name="rctMask" 
                            Grid.Row="1" 
-                           Fill="White" 
-                           Opacity="0.9"
-                           Visibility="Collapsed" 
-                           Tapped="rctMengban_Tapped"/>
+                           Fill="White"
+                           Visibility="Collapsed"
+                           Tapped="rctMask_Tapped"/>
                 <ProgressRing Name="pgrProcess" 
                               Grid.Row="1"
                               Width="80"
@@ -185,14 +189,32 @@
                               Foreground="Gray"/>
                 <Frame Name="frmMain" 
                        Grid.Row="1"
-                       Visibility="Collapsed"
-                       RenderTransformOrigin="0.5,0.5">
+                       RenderTransformOrigin="0,1">
                     <Frame.RenderTransform>
-                        <CompositeTransform ScaleX="0" ScaleY="0"/>
+                        <CompositeTransform />
                     </Frame.RenderTransform>
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <PaneThemeTransition/>
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
                 </Frame>
+                <Border Name="bdCornerHelper" 
+                        Grid.Row="1"
+                        Width="52"
+                        Height="52"
+                        Background="{ThemeResource SystemAccentColor}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Tapped="bdCornerHelper_Tapped">
+                    <Border.Transitions>
+                        <TransitionCollection>
+                            <RepositionThemeTransition/>
+                        </TransitionCollection>
+                    </Border.Transitions>
+                    <TextBlock Text="B7" Style="{StaticResource TxtLargeCommonBase}" Foreground="White"/>
+                </Border>
             </Grid>
         </SplitView.Content>
     </SplitView>
-
 </Page>

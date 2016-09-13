@@ -14,16 +14,13 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <AddDeleteThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
         <Image Source="{x:Bind BrandModel.Image}" Stretch="Uniform"/>
-        <Rectangle Fill="Black"
-                   Opacity="0.5"
-                   Visibility="{x:Bind BrandModel.IsFinished,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
-        <Image Name="imgFinish" 
-               Source="Assets/finished.png"
-               Width="100"
-               Height="100"
-               HorizontalAlignment="Right"
-               VerticalAlignment="Bottom"
+        <Image Source="Assets/Okay.png"
                Visibility="{x:Bind BrandModel.IsFinished,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
     </Grid>
     

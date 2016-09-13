@@ -1,6 +1,9 @@
 ﻿using System;
+using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -14,28 +17,49 @@ namespace Brand7
     /// </summary>
     public sealed partial class frmSettings : Page
     {
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
         public frmSettings()
         {
             this.InitializeComponent();
         }
 
-        private async void btnInitData_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (localSettings.Values["CornerHelper"] == null) tsCornerHelper.IsOn = false;
+            else tsCornerHelper.IsOn = true;
+        }
+
+        private void btnInitData_Click(object sender, RoutedEventArgs e)
         {
             //设置初始化标志
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
-            //弹窗提醒
-            var dialog = new ContentDialog()
-            {
-                Title = "WARNING!",
-                Content = "This will discard all your gaming progress, are you sure?\np.s. If you click \"yes\", you need to restart your app!",
-                Foreground = new SolidColorBrush(Colors.Red),
-                PrimaryButtonText = "YES",
-                SecondaryButtonText = "NO",
-            };
-
-            dialog.PrimaryButtonClick += (a, b) => { localSettings.Values["FirstStart"] = null; };
-            await dialog.ShowAsync();
+            localSettings.Values["FirstStart"] = null;
+            FindName("txtRestartTip");
         }
+
+        private async void btnEmail_Click(object sender, RoutedEventArgs e)
+        {
+            var deviceInfo = new EasClientDeviceInformation();
+            string mailto = "ex2tron@outlook.com";
+            string subject = "Brand7 UWP REPORTS";
+            string body =
+                $"DEVICE:{deviceInfo.FriendlyName}," +
+                $"OS:{deviceInfo.OperatingSystem}," +
+                $"HARDWARE:{deviceInfo.SystemHardwareVersion}";
+            Uri mailUri = new Uri(string.Format("mailto:{0}?subject={1}&body={2}", mailto, subject, body));
+            await Launcher.LaunchUriAsync(mailUri);
+        }
+
+        private async void btnBlog_Click(object sender, RoutedEventArgs e)
+        {
+            Uri blogUri = new Uri("http://ex2tron.lofter.com");
+            await Launcher.LaunchUriAsync(blogUri);
+        }
+
+        private void tsCornerHelper_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (tsCornerHelper.IsOn) localSettings.Values["CornerHelper"] = true;
+            else localSettings.Values["CornerHelper"] = null;
+        }      
     }
 }

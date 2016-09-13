@@ -11,8 +11,8 @@
                 case BrandCategory.Car:
                     name = "CAR";
                     break;
-                case BrandCategory.Express:
-                    name = "EXPRESS";
+                case BrandCategory.Walking:
+                    name = "TRIP&EMS";
                     break;
                 case BrandCategory.Lifestyle:
                     name = "LIFESTYLE";
@@ -44,7 +44,7 @@
     public enum BrandCategory
     {
         Car,
-        Express,
+        Walking,
         Lifestyle,
         Cater,
         AV,

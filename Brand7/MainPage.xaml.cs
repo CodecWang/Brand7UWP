@@ -1,17 +1,14 @@
 ﻿using Brand7.Models;
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -22,10 +19,11 @@ namespace Brand7
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        string _Title = "ALL BRANDS";
+        double _lastOffset = 0, _currentOffset = 0;
         BrandHelper BrandHelper = new BrandHelper();
         ObservableCollection<MenuModel> MenuList = new ObservableCollection<MenuModel>();
         ObservableCollection<BrandModel> BrandList = new ObservableCollection<BrandModel>();
-        double _lastOffset = 0, _currentOffset = 0;
 
         public MainPage()
         {
@@ -33,37 +31,31 @@ namespace Brand7
 
             //自定义标题栏、手机版状态栏等
             CustomizeWindow();
-
+            //注册绑定更新事件
+            DataContextChanged += (s, e) => Bindings.Update();
             //注册系统后退键事件
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
             {
-                if (frmMain.Visibility == Visibility.Visible)
+                if (btnBack.Visibility == Visibility.Visible)
                 {
                     e.Handled = true;
                     frmMainInOrOut(false);
+                    txtTitle.Text = _Title;
                 }
             };
             //注册窗口大小改变事件
-            Window.Current.SizeChanged += (s, e) => { UpdateListSize(e.Size.Width); };
+            Window.Current.SizeChanged += (s, e) => UpdateListSize(e.Size.Width);
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             pgrProcess.IsActive = true;
 
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            //判断是否是第一次启动
-            if (localSettings.Values["FirstStart"] == null)
-            {
-                //第一次启动，初始化本地数据文件
-                await BrandHelper.FirstStartInitDataAsync();
-                localSettings.Values["FirstStart"] = true;
-            }
-
             //初始化菜单和品牌列表
             MenuHelper.GetMenuList(MenuList);
-            await BrandHelper.GetAllBrandsAsync();
-            BrandHelper.BrandList.ToList().ForEach(p => BrandList.Add(p));
+            BrandList = BrandHelper.BrandList;
+
+            Bindings.Update();
             lstMenu.SelectedIndex = 0;
             UpdateListSize(ActualWidth);
 
@@ -72,28 +64,74 @@ namespace Brand7
 
         private void btnHamburger_Click(object sender, RoutedEventArgs e)
         {
-            svMenu.IsPaneOpen = !svMenu.IsPaneOpen;
+            svMenu.IsPaneOpen = true;
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            frmMainInOrOut(false);
+            txtTitle.Text = _Title;
         }
 
         private void lstMenu_ItemClick(object sender, ItemClickEventArgs e)
         {
             pgrProcess.IsActive = true;
 
-            MenuModel menu = e.ClickedItem as MenuModel;
-
             //根据选定菜单项获取品牌列表
+            MenuModel menu = e.ClickedItem as MenuModel;
             BrandHelper.GetBrandsByCategory(menu.Category);
-            BrandList.Clear();
-            BrandHelper.BrandList.ToList().ForEach(p => BrandList.Add(p));
+            BrandList = BrandHelper.BrandList;
 
-            if (frmMain.Visibility == Visibility.Visible)
-            {
-                frmMainInOrOut(false);
-            }
+            if (btnBack.Visibility == Visibility.Visible) frmMainInOrOut(false);
             svMenu.IsPaneOpen = false;
-            txtTitle.Text = menu.Name;
+            txtTitle.Text = _Title = menu.Name;
+            UpdateListSize(ActualWidth);
 
             pgrProcess.IsActive = false;
+        }
+
+        private void lstContent_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Image img = (Image)e.OriginalSource;
+            BrandModel clickedBrand = img.DataContext as BrandModel;
+            BrandHelper.CurrentBrand = clickedBrand;
+
+            //跳转到选定品牌的游戏页面
+            frmMain.Navigate(typeof(frmGaming), BrandHelper);
+            frmMainInOrOut(true);
+        }
+
+        private void svContent_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
+        {
+            //获取滚动前的偏移量
+            _lastOffset = svContent.VerticalOffset;
+        }
+
+        private void svContent_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            //获取滚动后的偏移量
+            _currentOffset = svContent.VerticalOffset;
+
+            //根据前后位移比较判断滚动方向：向上滚动，显示顶部控件；向下滚动，隐藏顶部控件
+            rpTopControl.Margin = _currentOffset > _lastOffset ? new Thickness(0, -65, 0, 0) : new Thickness(0);
+            bdCornerHelper.Margin = _currentOffset > _lastOffset ? new Thickness(0, 0, 0, -80) : new Thickness(0);
+        }
+
+        private void rctMask_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            frmMainInOrOut(false);
+        }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            frmMain.Navigate(typeof(frmSettings));
+            btnBack.Visibility = Visibility.Visible;
+            ((CompositeTransform)frmMain.RenderTransform).ScaleX = 1;
+            ((CompositeTransform)frmMain.RenderTransform).ScaleY = 1;
+
+            svMenu.IsPaneOpen = false;
+            lstMenu.SelectedIndex = -1;
+            txtTitle.Text = "SETTINGS";
         }
 
         private void btnCommon_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -102,11 +140,44 @@ namespace Brand7
             btn.BorderThickness = new Thickness(0);
         }
 
+        private void bdCornerHelper_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (frmMain.SourcePageType == null || frmMain.SourcePageType == typeof(frmSettings)) return;
+
+            bool isIn = btnBack.Visibility == Visibility.Collapsed ? true : false;
+            frmMainInOrOut(isIn);
+        }
+
+        /// <summary>
+        /// frmMain窗体显示或隐藏
+        /// </summary>
+        /// <param name="isIn">是否显示</param>
+        private void frmMainInOrOut(bool isIn)
+        {
+            if (isIn)
+            {
+                frmMainIn.Begin();
+                rctMaskIn.Begin();
+                btnBack.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                frmMainOut.Begin();
+                rctMaskOut.Begin();
+                btnBack.Visibility = Visibility.Collapsed;
+            }
+        }
+
         /// <summary>
         /// 自定义页面标题栏、手机版状态栏等
         /// </summary>
         private void CustomizeWindow()
         {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+            //判断是否要显示左下角小助手
+            if (localSettings.Values["CornerHelper"] == null) bdCornerHelper.Visibility = Visibility.Collapsed;
+
             //将控件塞入标题栏
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
@@ -124,77 +195,6 @@ namespace Brand7
                 StatusBar statusBar = StatusBar.GetForCurrentView();
                 statusBar.HideAsync();
             }
-        }
-
-        private void rctMengban_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            frmMainInOrOut(false);
-        }
-
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
-        {
-            frmMain.Navigate(typeof(frmSettings));
-            frmMainInOrOut(true);
-
-            svMenu.IsPaneOpen = false;
-            lstMenu.SelectedIndex = -1;
-            txtTitle.Text = "SETTINGS";
-        }
-
-        private void btnProgress_Click(object sender, RoutedEventArgs e)
-        {
-            frmMain.Navigate(typeof(frmProgress));
-            frmMainInOrOut(true);
-
-            svMenu.IsPaneOpen = false;
-            lstMenu.SelectedIndex = -1;
-            txtTitle.Text = "PROGRESS";
-        }
-
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            bool isIn = frmMain.Visibility == Visibility.Collapsed ? true : false;
-            frmMainInOrOut(isIn);
-        }
-
-        private void frmMainInOrOut(bool isIn)
-        {
-            if (isIn)
-            {
-                frmMainIn.Begin();
-                btnBack.Visibility = Visibility.Visible;
-                rctMask.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                frmMainOut.Begin();
-                btnBack.Visibility = Visibility.Collapsed;
-                rctMask.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void lstCont_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            var img = (Image)e.OriginalSource;
-            BrandModel clickedBrand = img.DataContext as BrandModel;
-            clickedBrand.IsSelected = true;
-
-            //跳转到选定品牌的游戏页面
-            frmMain.Navigate(typeof(frmGaming), BrandHelper);
-            frmMainInOrOut(true);
-        }
-
-        private void svContent_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
-        {
-            _lastOffset = svContent.VerticalOffset;
-        }
-
-        private void svContent_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            _currentOffset = svContent.VerticalOffset;
-
-            //根据前后位移比较判断滚动方向：向上滚动，显示顶部控件；向下滚动，隐藏顶部控件
-            rpTopControl.Visibility = _currentOffset > _lastOffset ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
