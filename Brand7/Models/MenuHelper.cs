@@ -6,7 +6,6 @@ namespace Brand7.Models
     {
         public static void GetMenuList(ObservableCollection<MenuModel> menuList)
         {
-            menuList.Add(new MenuModel(BrandCategory.All));
             menuList.Add(new MenuModel(BrandCategory.Car));
             menuList.Add(new MenuModel(BrandCategory.Walking));
             menuList.Add(new MenuModel(BrandCategory.Lifestyle));

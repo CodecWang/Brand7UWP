@@ -7,45 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    RequestedTheme="{x:Bind GameHelper.ThemeModel.Theme,Mode=OneWay}"
     Loaded="Page_Loaded">
 
     <Page.Resources>
-        <Style x:Key="TxtSmallCommonBase" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="TxtLargeCommonBase" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="BtnHamburgerStyle" TargetType="Button">
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Background" Value="#F2F2F2"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Content" Value="&#xE700;"/>
-            <Setter Property="Width" Value="65"/>
-            <Setter Property="Height" Value="65"/>
-        </Style>
-        <Style x:Key="BtnBackStyle" TargetType="Button">
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-            <Setter Property="Content" Value="&#xE0A6;"/>
-            <Setter Property="Width" Value="65"/>
-            <Setter Property="Height" Value="65"/>
-            <Setter Property="Background" Value="#F2F2F2"/>
-        </Style>
-        <Style x:Key="TxtAppNameStyle" TargetType="TextBlock" BasedOn="{StaticResource TxtLargeCommonBase}">
-            <Setter Property="Text" Value="BRAND7"/>
-            <Setter Property="Margin" Value="30,20,0,20"/>
-        </Style>
-
-        <DataTemplate x:Key="MenuItemTemplate" x:DataType="models:MenuModel" >
-            <TextBlock Text="{x:Bind Name}" Style="{StaticResource TxtSmallCommonBase}" Margin="20,15"/>
-        </DataTemplate>
-
         <Storyboard x:Name="frmMainIn">
             <DoubleAnimation Storyboard.TargetName="frmMain" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Duration="0:0:0.5" From="0" To="1" >
                 <DoubleAnimation.EasingFunction>
@@ -83,38 +48,77 @@
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Storyboard.TargetName="rctMask" Storyboard.TargetProperty="Opacity" From="0.9" To="0" Duration="0:0:0.5"/>
         </Storyboard>
+        <DataTemplate x:Key="MenuItemTemplate" x:DataType="models:MenuModel" >
+            <TextBlock Text="{x:Bind Name}" Style="{ThemeResource TxtSmallStyle}" Margin="20,15"/>
+        </DataTemplate>
     </Page.Resources>
 
-    <SplitView Name="svMenu" DisplayMode="Overlay" OpenPaneLength="300">
-        <SplitView.Pane>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition />
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+    <SplitView Name="svMenu" 
+               DisplayMode="Overlay" 
+               OpenPaneLength="300"
+               PaneBackground="{ThemeResource AppPaneBackgroundBrush}">
 
-                <TextBlock Name="txtAppName" Style="{StaticResource TxtAppNameStyle}" HorizontalAlignment="Left"/>
-                <ListView Name="lstMenu" 
-                          Grid.Row="1"
-                          Width="300"
-                          ItemsSource="{x:Bind MenuList}" 
-                          ItemTemplate="{StaticResource MenuItemTemplate}"
-                          IsItemClickEnabled="True"
-                          ItemClick="lstMenu_ItemClick"/>
-                <Button Name="btnSettings" 
-                        Grid.Row="3"
-                        Width="300" 
-                        VerticalAlignment="Bottom"
-                        Background="Transparent" 
-                        Click="btnSettings_Click"
-                        PointerEntered="btnCommon_PointerEntered">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" Margin="0,10,10,10"/>
-                        <TextBlock Text="SETTINGS" Style="{StaticResource TxtSmallCommonBase}"/>
+        <SplitView.Pane>
+            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Name="txtAppName"
+                               Text="Brand7"
+                               Style="{ThemeResource TxtLargeStyle}" 
+                               HorizontalAlignment="Left"
+                               Margin="13,20"/>
+                    <StackPanel Grid.Row="1">
+                        <ListViewItem Content="ALL BRANDS" FontWeight="Bold" IsEnabled="False"/>
+                        <ListView Name="lstMenu" 
+                                  Width="300"
+                                  ItemsSource="{x:Bind MenuList}" 
+                                  ItemTemplate="{ThemeResource MenuItemTemplate}"
+                                  IsItemClickEnabled="True"
+                                  ItemClick="lstMenu_ItemClick"/>
+                        <ListViewItem Content="SETTINGS" FontWeight="Bold" IsEnabled="False"/>
+                        <Button Name="btnInit" 
+                                Content="CLEAN ALL YOUR DATA( WARNING!)" 
+                                Height="45"
+                                Width="300"
+                                Background="Transparent"
+                                Click="btnInit_Click"
+                                PointerEntered="btnCommon_PointerEntered"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="CORNER HELPER" Margin="30,10,0,0" Style="{ThemeResource TxtSmallStyle}"/>
+                            <ToggleSwitch Name="tsCornerHelper" Margin="40,0,0,0" Toggled="tsCornerHelper_Toggled">
+                                <ToggleSwitch.OnContent>
+                                    <TextBlock Text="On"/>
+                                </ToggleSwitch.OnContent>
+                                <ToggleSwitch.OffContent>
+                                    <TextBlock Text="Off"/>
+                                </ToggleSwitch.OffContent>
+                            </ToggleSwitch>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="DARK MODE" Margin="30,10,0,0" Style="{ThemeResource TxtSmallStyle}"/>
+                            <ToggleSwitch Name="tsTheme" Margin="67,0,0,0" Toggled="tsTheme_Toggled">
+                                <ToggleSwitch.OnContent>
+                                    <TextBlock Text="On"/>
+                                </ToggleSwitch.OnContent>
+                                <ToggleSwitch.OffContent>
+                                    <TextBlock Text="Off"/>
+                                </ToggleSwitch.OffContent>
+                            </ToggleSwitch>
+                        </StackPanel>
                     </StackPanel>
-                </Button>
-            </Grid>
+                    <ListViewItem Name="lstFeedAbout" 
+                                  Content="ABOUT&amp;FEEDBACK"
+                                  FontWeight="Bold"
+                                  VerticalAlignment="Bottom" 
+                                  Grid.Row="2"
+                                  Tapped="lstFeedAbout_Tapped"/>
+                </Grid>
+            </ScrollViewer>
         </SplitView.Pane>
         <SplitView.Content>
             <Grid>
@@ -123,19 +127,19 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <RelativePanel Name="rpTopControl" Background="#F2F2F2">
+                <RelativePanel Name="rpTopControl" Background="{ThemeResource AppMainBackgroundBrush}">
                     <RelativePanel.Transitions>
                         <TransitionCollection>
                             <RepositionThemeTransition/>
                         </TransitionCollection>
                     </RelativePanel.Transitions>
                     <Button Name="btnHamburger" 
-                            Style="{StaticResource BtnHamburgerStyle}"
+                            Style="{ThemeResource BtnHamburgerStyle}"
                             RelativePanel.AlignLeftWithPanel="True"
                             Click="btnHamburger_Click" 
                             PointerEntered="btnCommon_PointerEntered"/>
                     <Button Name="btnBack"
-                            Style="{StaticResource BtnBackStyle}"
+                            Style="{ThemeResource BtnBackStyle}"
                             Visibility="Collapsed"
                             RelativePanel.RightOf="btnHamburger"
                             Click="btnBack_Click"
@@ -147,8 +151,8 @@
                                Margin="0,0,140,0"
                                RelativePanel.RightOf="btnBack"/>
                     <TextBlock Name="txtTitle"
-                               Text="ALL BRANDS"
-                               Style="{StaticResource TxtLargeCommonBase}"
+                               Text="CAR"
+                               Style="{ThemeResource TxtLargeStyle}"
                                RelativePanel.AlignHorizontalCenterWithPanel="True"
                                RelativePanel.AlignVerticalCenterWithPanel="True"/>
                 </RelativePanel>
@@ -179,7 +183,7 @@
                 </ScrollViewer>
                 <Rectangle Name="rctMask" 
                            Grid.Row="1" 
-                           Fill="White"
+                           Fill="{ThemeResource AppGameBackgroundBrush}"
                            Visibility="Collapsed"
                            Tapped="rctMask_Tapped"/>
                 <ProgressRing Name="pgrProcess" 
@@ -200,10 +204,11 @@
                     </Frame.ContentTransitions>
                 </Frame>
                 <Border Name="bdCornerHelper" 
+                        BorderThickness="0"
                         Grid.Row="1"
                         Width="52"
                         Height="52"
-                        Background="{ThemeResource SystemAccentColor}"
+                        Background="{ThemeResource AppMainBackgroundBrush}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
                         Tapped="bdCornerHelper_Tapped">
@@ -212,7 +217,7 @@
                             <RepositionThemeTransition/>
                         </TransitionCollection>
                     </Border.Transitions>
-                    <TextBlock Text="B7" Style="{StaticResource TxtLargeCommonBase}" Foreground="White"/>
+                    <TextBlock Text="B7" Style="{ThemeResource TxtLargeStyle}"/>
                 </Border>
             </Grid>
         </SplitView.Content>

@@ -17,7 +17,7 @@ namespace Brand7
     /// </summary>
     public sealed partial class frmGaming : Page
     {
-        BrandHelper BrandHelper;
+        GameHelper GameHelper;
         BrandModel CurrentBrand;
         ObservableCollection<BrandModel> BrandList;
 
@@ -28,8 +28,9 @@ namespace Brand7
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            BrandHelper = e.Parameter as BrandHelper;
-            BrandList = BrandHelper.BrandList;
+            GameHelper = e.Parameter as GameHelper;
+            BrandList = GameHelper.BrandHelper.BrandList;
+            //注册共享（求助）数据事件
             DataTransferManager.GetForCurrentView().DataRequested += Gaming_DataRequested;
         }
 
@@ -40,7 +41,7 @@ namespace Brand7
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            CurrentBrand = BrandHelper.CurrentBrand;
+            CurrentBrand = GameHelper.BrandHelper.CurrentBrand;
             fvGaming.SelectedItem = CurrentBrand;
         }
 
@@ -76,9 +77,9 @@ namespace Brand7
                 txtMessage.Text = "( •̀ ω •́ )BINGO!!!";
                 Bindings.Update();
                 //将更新后的数据保存到本地
-                await BrandHelper.WriteBrandsToLocalAsync();
+                await GameHelper.BrandHelper.WriteBrandsToLocalAsync();
             }
-            else txtMessage.Text = "( ╯□╰ )Whoops!";
+            else txtMessage.Text = "( ╯□╰ )WHOOPS!";
 
             //提示动画
             MessageIn.Begin();
@@ -119,6 +120,7 @@ namespace Brand7
 
         private async void hlbtnWiki_Click(object sender, RoutedEventArgs e)
         {
+            //跳转至百度百科词条
             Uri wiki = new Uri(string.Format("http://baike.baidu.com/search/word?word={0}", hlbtnWiki.Content));
             await Launcher.LaunchUriAsync(wiki);
         }

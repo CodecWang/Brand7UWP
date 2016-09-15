@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Brand7_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
   </PropertyGroup>
@@ -98,8 +98,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="frmSettings.xaml.cs">
-      <DependentUpon>frmSettings.xaml</DependentUpon>
+    <Compile Include="frmAbout.xaml.cs">
+      <DependentUpon>frmAbout.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\BoolToVisibilityConverter.cs" />
     <Compile Include="BrandGamingTemplate.xaml.cs">
@@ -117,9 +117,11 @@
     <Compile Include="Models\BrandHelper.cs" />
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\CategoryHelper.cs" />
+    <Compile Include="Models\GameHelper.cs" />
     <Compile Include="Models\JSONHelper.cs" />
     <Compile Include="Models\MenuHelper.cs" />
     <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\ThemeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,26 +131,33 @@
     <None Include="Brand7_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\About.png" />
     <Content Include="Assets\Images\AV\A站.jpg" />
     <Content Include="Assets\Images\AV\Bad Robot.jpg" />
     <Content Include="Assets\Images\AV\DC.jpg" />
+    <Content Include="Assets\Images\AV\HBO.jpg" />
     <Content Include="Assets\Images\AV\hulu.jpg" />
     <Content Include="Assets\Images\AV\Netflix.jpg" />
+    <Content Include="Assets\Images\AV\Vimeo.jpg" />
     <Content Include="Assets\Images\AV\YouTube.jpg" />
+    <Content Include="Assets\Images\AV\中央电视台.jpg" />
+    <Content Include="Assets\Images\AV\乐视视频.jpg" />
     <Content Include="Assets\Images\AV\二十世纪福克斯.jpg" />
     <Content Include="Assets\Images\AV\优酷.jpg" />
     <Content Include="Assets\Images\AV\传奇影业.jpg" />
+    <Content Include="Assets\Images\AV\北京电视台.jpg" />
     <Content Include="Assets\Images\AV\华纳兄弟.jpg" />
     <Content Include="Assets\Images\AV\哔哩哔哩.jpg" />
+    <Content Include="Assets\Images\AV\哥伦比亚广播公司.jpg" />
     <Content Include="Assets\Images\AV\哥伦比亚影业公司.jpg" />
     <Content Include="Assets\Images\AV\土豆网.jpg" />
     <Content Include="Assets\Images\AV\孩之宝.jpg" />
     <Content Include="Assets\Images\AV\工业光魔.jpg" />
+    <Content Include="Assets\Images\AV\搜狐视频.jpg" />
     <Content Include="Assets\Images\AV\新线.jpg" />
     <Content Include="Assets\Images\AV\杰瑞·布鲁克海默电影公司.jpg" />
     <Content Include="Assets\Images\AV\梦工厂.jpg" />
     <Content Include="Assets\Images\AV\派拉蒙.jpg" />
+    <Content Include="Assets\Images\AV\湖南卫视.jpg" />
     <Content Include="Assets\Images\AV\湖岸影业.jpg" />
     <Content Include="Assets\Images\AV\漫威.jpg" />
     <Content Include="Assets\Images\AV\照明娱乐公司.jpg" />
@@ -157,7 +166,13 @@
     <Content Include="Assets\Images\AV\环球影业.jpg" />
     <Content Include="Assets\Images\AV\皮克斯.jpg" />
     <Content Include="Assets\Images\AV\米高梅.jpg" />
+    <Content Include="Assets\Images\AV\维塔数码.jpg" />
+    <Content Include="Assets\Images\AV\美国全国广播公司.jpg" />
+    <Content Include="Assets\Images\AV\美国广播公司.jpg" />
+    <Content Include="Assets\Images\AV\美国有线电视新闻网.jpg" />
     <Content Include="Assets\Images\AV\联美.jpg" />
+    <Content Include="Assets\Images\AV\腾讯视频.jpg" />
+    <Content Include="Assets\Images\AV\英国广播公司.jpg" />
     <Content Include="Assets\Images\AV\蓝天工作室.jpg" />
     <Content Include="Assets\Images\AV\迪士尼.jpg" />
     <Content Include="Assets\Images\AV\顶峰娱乐.jpg" />
@@ -186,12 +201,15 @@
     <Content Include="Assets\Images\Car\卡尔森.jpg" />
     <Content Include="Assets\Images\Car\双龙.jpg" />
     <Content Include="Assets\Images\Car\吉利.jpg" />
+    <Content Include="Assets\Images\Car\名爵.jpg" />
     <Content Include="Assets\Images\Car\大众.jpg" />
+    <Content Include="Assets\Images\Car\奇瑞.jpg" />
     <Content Include="Assets\Images\Car\奔驰.jpg" />
     <Content Include="Assets\Images\Car\奥迪.jpg" />
     <Content Include="Assets\Images\Car\威兹曼.jpg" />
     <Content Include="Assets\Images\Car\宝沃.jpg" />
     <Content Include="Assets\Images\Car\宝马.jpg" />
+    <Content Include="Assets\Images\Car\宝骏.jpg" />
     <Content Include="Assets\Images\Car\宾利.jpg" />
     <Content Include="Assets\Images\Car\布加迪.jpg" />
     <Content Include="Assets\Images\Car\帕加尼.jpg" />
@@ -228,6 +246,7 @@
     <Content Include="Assets\Images\Car\迈凯伦.jpg" />
     <Content Include="Assets\Images\Car\道奇.jpg" />
     <Content Include="Assets\Images\Car\铃木.jpg" />
+    <Content Include="Assets\Images\Car\长城.jpg" />
     <Content Include="Assets\Images\Car\长安汽车.jpg" />
     <Content Include="Assets\Images\Car\阿尔法罗密欧.jpg" />
     <Content Include="Assets\Images\Car\阿斯顿马丁.jpg" />
@@ -236,28 +255,40 @@
     <Content Include="Assets\Images\Car\雷克萨斯.jpg" />
     <Content Include="Assets\Images\Car\雷诺.jpg" />
     <Content Include="Assets\Images\Car\马自达.jpg" />
+    <Content Include="Assets\Images\Cater\85度C.jpg" />
+    <Content Include="Assets\Images\Cater\costa咖啡.jpg" />
+    <Content Include="Assets\Images\Cater\上岛咖啡.jpg" />
     <Content Include="Assets\Images\Cater\东方既白.jpg" />
     <Content Include="Assets\Images\Cater\伊利.jpg" />
+    <Content Include="Assets\Images\Cater\俏江南.jpg" />
+    <Content Include="Assets\Images\Cater\农夫山泉.jpg" />
     <Content Include="Assets\Images\Cater\冰雪皇后.jpg" />
     <Content Include="Assets\Images\Cater\卡夫.jpg" />
     <Content Include="Assets\Images\Cater\可口可乐.jpg" />
+    <Content Include="Assets\Images\Cater\吉野家.jpg" />
     <Content Include="Assets\Images\Cater\味千拉面.jpg" />
     <Content Include="Assets\Images\Cater\哈根达斯.jpg" />
     <Content Include="Assets\Images\Cater\唐恩都乐.jpg" />
     <Content Include="Assets\Images\Cater\塔可钟.jpg" />
+    <Content Include="Assets\Images\Cater\太平洋咖啡.jpg" />
     <Content Include="Assets\Images\Cater\奥利奥.jpg" />
+    <Content Include="Assets\Images\Cater\娃哈哈.jpg" />
     <Content Include="Assets\Images\Cater\小肥羊.jpg" />
     <Content Include="Assets\Images\Cater\康师傅.jpg" />
     <Content Include="Assets\Images\Cater\德克士.jpg" />
+    <Content Include="Assets\Images\Cater\德芙.jpg" />
     <Content Include="Assets\Images\Cater\必胜宅急送.jpg" />
     <Content Include="Assets\Images\Cater\必胜客.jpg" />
     <Content Include="Assets\Images\Cater\星巴克.jpg" />
     <Content Include="Assets\Images\Cater\棒约翰.jpg" />
+    <Content Include="Assets\Images\Cater\永和大王.jpg" />
+    <Content Include="Assets\Images\Cater\永和豆浆.jpg" />
     <Content Include="Assets\Images\Cater\汉堡王.jpg" />
     <Content Include="Assets\Images\Cater\海滋客.jpg" />
     <Content Include="Assets\Images\Cater\百事可乐.jpg" />
     <Content Include="Assets\Images\Cater\百胜.jpg" />
     <Content Include="Assets\Images\Cater\真功夫.jpg" />
+    <Content Include="Assets\Images\Cater\红牛.jpg" />
     <Content Include="Assets\Images\Cater\肯德基.jpg" />
     <Content Include="Assets\Images\Cater\艾德熊.jpg" />
     <Content Include="Assets\Images\Cater\蒙牛.jpg" />
@@ -268,6 +299,7 @@
     <Content Include="Assets\Images\Cater\雀巢.jpg" />
     <Content Include="Assets\Images\Cater\麦当劳.jpg" />
     <Content Include="Assets\Images\Fashion\361度.jpg" />
+    <Content Include="Assets\Images\Fashion\AE美国鹰.jpg" />
     <Content Include="Assets\Images\Fashion\forever 21.jpg" />
     <Content Include="Assets\Images\Fashion\GAP.jpg" />
     <Content Include="Assets\Images\Fashion\H&amp;M.jpg" />
@@ -280,6 +312,7 @@
     <Content Include="Assets\Images\Fashion\匹克.jpg" />
     <Content Include="Assets\Images\Fashion\卡地亚.jpg" />
     <Content Include="Assets\Images\Fashion\卡帕.jpg" />
+    <Content Include="Assets\Images\Fashion\大嘴猴.jpg" />
     <Content Include="Assets\Images\Fashion\安踏.jpg" />
     <Content Include="Assets\Images\Fashion\彪马.jpg" />
     <Content Include="Assets\Images\Fashion\新百伦.jpg" />
@@ -288,25 +321,39 @@
     <Content Include="Assets\Images\Fashion\李宁.jpg" />
     <Content Include="Assets\Images\Fashion\杜嘉班纳.jpg" />
     <Content Include="Assets\Images\Fashion\柒牌.jpg" />
+    <Content Include="Assets\Images\Fashion\欧米茄.jpg" />
     <Content Include="Assets\Images\Fashion\爱马仕.jpg" />
     <Content Include="Assets\Images\Fashion\特步.jpg" />
     <Content Include="Assets\Images\Fashion\稻草人.jpg" />
+    <Content Include="Assets\Images\Fashion\纪梵希.jpg" />
     <Content Include="Assets\Images\Fashion\美特斯邦威.jpg" />
     <Content Include="Assets\Images\Fashion\耐克.jpg" />
     <Content Include="Assets\Images\Fashion\芬迪.jpg" />
     <Content Include="Assets\Images\Fashion\花花公子.jpg" />
     <Content Include="Assets\Images\Fashion\范思哲.jpg" />
+    <Content Include="Assets\Images\Fashion\西雅衣家.jpg" />
+    <Content Include="Assets\Images\Fashion\路易威登.jpg" />
+    <Content Include="Assets\Images\Fashion\迪奥.jpg" />
     <Content Include="Assets\Images\Fashion\锐步.jpg" />
     <Content Include="Assets\Images\Fashion\阿玛尼.jpg" />
     <Content Include="Assets\Images\Fashion\阿迪达斯.jpg" />
+    <Content Include="Assets\Images\Fashion\香奈儿.jpg" />
+    <Content Include="Assets\Images\Fashion\骆驼.jpg" />
     <Content Include="Assets\Images\Fashion\鸿星尔克.jpg" />
     <Content Include="Assets\Images\Lifestyle\21世纪不动产.jpg" />
     <Content Include="Assets\Images\Lifestyle\7-11.jpg" />
-    <Content Include="Assets\Images\Lifestyle\7天连锁酒店.jpg" />
     <Content Include="Assets\Images\Lifestyle\ebay.jpg" />
+    <Content Include="Assets\Images\Lifestyle\JCB信用卡.jpg" />
+    <Content Include="Assets\Images\Lifestyle\VISA.jpg" />
+    <Content Include="Assets\Images\Lifestyle\万事达卡.jpg" />
+    <Content Include="Assets\Images\Lifestyle\中国人民银行.jpg" />
     <Content Include="Assets\Images\Lifestyle\中国农业银行.jpg" />
+    <Content Include="Assets\Images\Lifestyle\中国大唐集团公司.jpg" />
     <Content Include="Assets\Images\Lifestyle\中国工商银行.jpg" />
     <Content Include="Assets\Images\Lifestyle\中国建设银行.jpg" />
+    <Content Include="Assets\Images\Lifestyle\中国石油化工集团公司.jpg" />
+    <Content Include="Assets\Images\Lifestyle\中国石油天然气集团公司.jpg" />
+    <Content Include="Assets\Images\Lifestyle\中国邮政储蓄银行.jpg" />
     <Content Include="Assets\Images\Lifestyle\中国银行.jpg" />
     <Content Include="Assets\Images\Lifestyle\乐购.jpg" />
     <Content Include="Assets\Images\Lifestyle\亚马逊.jpg" />
@@ -318,15 +365,16 @@
     <Content Include="Assets\Images\Lifestyle\味全.jpg" />
     <Content Include="Assets\Images\Lifestyle\和路雪.jpg" />
     <Content Include="Assets\Images\Lifestyle\喜士多.jpg" />
+    <Content Include="Assets\Images\Lifestyle\国家电网.jpg" />
     <Content Include="Assets\Images\Lifestyle\大润发.jpg" />
     <Content Include="Assets\Images\Lifestyle\天猫.jpg" />
     <Content Include="Assets\Images\Lifestyle\好又多.jpg" />
-    <Content Include="Assets\Images\Lifestyle\如家.jpg" />
     <Content Include="Assets\Images\Lifestyle\安利.jpg" />
     <Content Include="Assets\Images\Lifestyle\宜家.jpg" />
     <Content Include="Assets\Images\Lifestyle\宝洁.jpg" />
     <Content Include="Assets\Images\Lifestyle\家乐福.jpg" />
-    <Content Include="Assets\Images\Lifestyle\希尔顿.jpg" />
+    <Content Include="Assets\Images\Lifestyle\尊尼获加.jpg" />
+    <Content Include="Assets\Images\Lifestyle\招商银行.jpg" />
     <Content Include="Assets\Images\Lifestyle\新蛋网.jpg" />
     <Content Include="Assets\Images\Lifestyle\无印良品.jpg" />
     <Content Include="Assets\Images\Lifestyle\易买得.jpg" />
@@ -336,6 +384,7 @@
     <Content Include="Assets\Images\Lifestyle\汾酒.jpg" />
     <Content Include="Assets\Images\Lifestyle\沃尔玛.jpg" />
     <Content Include="Assets\Images\Lifestyle\泸州老窖.jpg" />
+    <Content Include="Assets\Images\Lifestyle\浦发银行.jpg" />
     <Content Include="Assets\Images\Lifestyle\海飞丝.jpg" />
     <Content Include="Assets\Images\Lifestyle\潘婷.jpg" />
     <Content Include="Assets\Images\Lifestyle\玉兰油.jpg" />
@@ -343,6 +392,7 @@
     <Content Include="Assets\Images\Lifestyle\相宜本草.jpg" />
     <Content Include="Assets\Images\Lifestyle\联合利华.jpg" />
     <Content Include="Assets\Images\Lifestyle\舒肤佳.jpg" />
+    <Content Include="Assets\Images\Lifestyle\花王.jpg" />
     <Content Include="Assets\Images\Lifestyle\茅台.jpg" />
     <Content Include="Assets\Images\Lifestyle\西凤酒.jpg" />
     <Content Include="Assets\Images\Lifestyle\金龙鱼.jpg" />
@@ -351,17 +401,34 @@
     <Content Include="Assets\Images\Lifestyle\高露洁.jpg" />
     <Content Include="Assets\Images\Lifestyle\麦德龙.jpg" />
     <Content Include="Assets\Images\Lifestyle\黑人.jpg" />
+    <Content Include="Assets\Images\Tech\OPPO.jpg" />
+    <Content Include="Assets\Images\Tech\vivo.jpg" />
     <Content Include="Assets\Images\Tech\冶天.jpg" />
     <Content Include="Assets\Images\Tech\博世.jpg" />
     <Content Include="Assets\Images\Tech\奇虎360.jpg" />
+    <Content Include="Assets\Images\Tech\宝丽来.jpg" />
     <Content Include="Assets\Images\Tech\柯达.jpg" />
     <Content Include="Assets\Images\Tech\超威半导体.jpg" />
+    <Content Include="Assets\Images\Tech\连我.jpg" />
     <Content Include="Assets\Images\Tech\骁龙.jpg" />
+    <Content Include="Assets\Images\Tech\魅族.jpg" />
     <Content Include="Assets\Images\Walking\12306.jpg" />
+    <Content Include="Assets\Images\Walking\7天连锁酒店.jpg" />
     <Content Include="Assets\Images\Walking\Uber.jpg" />
+    <Content Include="Assets\Images\Walking\东方航空.jpg" />
+    <Content Include="Assets\Images\Walking\中国南方航空.jpg" />
+    <Content Include="Assets\Images\Walking\中国国航.jpg" />
     <Content Include="Assets\Images\Walking\全峰快递.jpg" />
+    <Content Include="Assets\Images\Walking\厦门航空.jpg" />
+    <Content Include="Assets\Images\Walking\同程旅游.jpg" />
+    <Content Include="Assets\Images\Walking\国泰航空.jpg" />
+    <Content Include="Assets\Images\Walking\如家.jpg" />
+    <Content Include="Assets\Images\Walking\希尔顿.jpg" />
     <Content Include="Assets\Images\Walking\新邦物流.jpg" />
+    <Content Include="Assets\Images\Walking\春秋航空.jpg" />
+    <Content Include="Assets\Images\Walking\汉庭酒店.jpg" />
     <Content Include="Assets\Images\Walking\滴滴出行.jpg" />
+    <Content Include="Assets\Images\Walking\神州租车.jpg" />
     <Content Include="Assets\Images\Walking\艺龙旅行.jpg" />
     <Content Include="Assets\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\NewStoreLogo.scale-125.png" />
@@ -536,7 +603,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="frmSettings.xaml">
+    <Page Include="frmAbout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -547,6 +614,16 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theme\DarkThemeDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Theme\LightThemeDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
   <ItemGroup>

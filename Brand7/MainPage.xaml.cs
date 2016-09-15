@@ -1,9 +1,12 @@
 ﻿using Brand7.Models;
+using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,9 +22,9 @@ namespace Brand7
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        string _Title = "ALL BRANDS";
+        string _Title = "CAR";
         double _lastOffset = 0, _currentOffset = 0;
-        BrandHelper BrandHelper = new BrandHelper();
+        GameHelper GameHelper = new GameHelper();
         ObservableCollection<MenuModel> MenuList = new ObservableCollection<MenuModel>();
         ObservableCollection<BrandModel> BrandList = new ObservableCollection<BrandModel>();
 
@@ -53,8 +56,9 @@ namespace Brand7
 
             //初始化菜单和品牌列表
             MenuHelper.GetMenuList(MenuList);
-            BrandList = BrandHelper.BrandList;
-
+            //启动时加载汽车品牌
+            GameHelper.BrandHelper.GetBrandsByCategory(BrandCategory.Car);
+            BrandList = GameHelper.BrandHelper.BrandList;
             Bindings.Update();
             lstMenu.SelectedIndex = 0;
             UpdateListSize(ActualWidth);
@@ -79,8 +83,8 @@ namespace Brand7
 
             //根据选定菜单项获取品牌列表
             MenuModel menu = e.ClickedItem as MenuModel;
-            BrandHelper.GetBrandsByCategory(menu.Category);
-            BrandList = BrandHelper.BrandList;
+            GameHelper.BrandHelper.GetBrandsByCategory(menu.Category);
+            BrandList = GameHelper.BrandHelper.BrandList;
 
             if (btnBack.Visibility == Visibility.Visible) frmMainInOrOut(false);
             svMenu.IsPaneOpen = false;
@@ -94,10 +98,10 @@ namespace Brand7
         {
             Image img = (Image)e.OriginalSource;
             BrandModel clickedBrand = img.DataContext as BrandModel;
-            BrandHelper.CurrentBrand = clickedBrand;
+            GameHelper.BrandHelper.CurrentBrand = clickedBrand;
 
             //跳转到选定品牌的游戏页面
-            frmMain.Navigate(typeof(frmGaming), BrandHelper);
+            frmMain.Navigate(typeof(frmGaming), GameHelper);
             frmMainInOrOut(true);
         }
 
@@ -115,6 +119,13 @@ namespace Brand7
             //根据前后位移比较判断滚动方向：向上滚动，显示顶部控件；向下滚动，隐藏顶部控件
             rpTopControl.Margin = _currentOffset > _lastOffset ? new Thickness(0, -65, 0, 0) : new Thickness(0);
             bdCornerHelper.Margin = _currentOffset > _lastOffset ? new Thickness(0, 0, 0, -80) : new Thickness(0);
+
+            //暗黑主题下更改标题栏的颜色
+            if (GameHelper.ThemeModel.Theme == ElementTheme.Light) return;
+            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            viewTitleBar.ButtonForegroundColor =
+                 _currentOffset > _lastOffset ?
+                     Color.FromArgb(255, 0, 0, 0) : Color.FromArgb(255, 255, 255, 255);
         }
 
         private void rctMask_Tapped(object sender, TappedRoutedEventArgs e)
@@ -122,9 +133,9 @@ namespace Brand7
             frmMainInOrOut(false);
         }
 
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        private void lstFeedAbout_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            frmMain.Navigate(typeof(frmSettings));
+            frmMain.Navigate(typeof(frmAbout),GameHelper);
             btnBack.Visibility = Visibility.Visible;
             ((CompositeTransform)frmMain.RenderTransform).ScaleX = 1;
             ((CompositeTransform)frmMain.RenderTransform).ScaleY = 1;
@@ -142,10 +153,61 @@ namespace Brand7
 
         private void bdCornerHelper_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (frmMain.SourcePageType == null || frmMain.SourcePageType == typeof(frmSettings)) return;
+            if (frmMain.SourcePageType == null || frmMain.SourcePageType == typeof(frmAbout)) return;
 
             bool isIn = btnBack.Visibility == Visibility.Collapsed ? true : false;
             frmMainInOrOut(isIn);
+        }
+
+        private async void btnInit_Click(object sender, RoutedEventArgs e)
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+            //弹出警告提醒
+            var dialog = new ContentDialog()
+            {
+                Content = "THIS WILL CLEAN ALL YOUR GAME DATA, ARE YOU SURE?",
+                Title = "WARNING",
+                PrimaryButtonText = "YES",
+                SecondaryButtonText = "NO"
+            };
+            //按下YES弹出重启提醒
+            dialog.PrimaryButtonClick += async (a, b) =>
+            {
+                localSettings.Values["FirstStart"] = null;
+                var tip = new MessageDialog("RESTART YOUR APP TO TAKE EFFECT.");
+                await tip.ShowAsync();
+            };
+            await dialog.ShowAsync();
+        }
+
+        private void tsTheme_Toggled(object sender, RoutedEventArgs e)
+        {
+            //保存主题设置
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            if (tsTheme.IsOn) localSettings.Values["DarkMode"] = true;
+            else localSettings.Values["DarkMode"] = null;
+
+            //切换主题
+            GameHelper.ThemeModel.Theme =
+                GameHelper.ThemeModel.Theme == ElementTheme.Dark ?
+                ElementTheme.Light : ElementTheme.Dark;
+
+            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            //更改标题栏的按钮颜色
+            viewTitleBar.ButtonForegroundColor =
+                 GameHelper.ThemeModel.Theme == ElementTheme.Dark ?
+                     Color.FromArgb(255, 255, 255, 255) : Color.FromArgb(255, 0, 0, 0);
+        }
+
+        private void tsCornerHelper_Toggled(object sender, RoutedEventArgs e)
+        {
+            //保存设置
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            if (tsCornerHelper.IsOn) localSettings.Values["CornerHelper"] = true;
+            else localSettings.Values["CornerHelper"] = null;
+
+            bdCornerHelper.Visibility = tsCornerHelper.IsOn ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -173,10 +235,12 @@ namespace Brand7
         /// </summary>
         private void CustomizeWindow()
         {
+            //加载上次关闭应用时的设置
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
-            //判断是否要显示左下角小助手
-            if (localSettings.Values["CornerHelper"] == null) bdCornerHelper.Visibility = Visibility.Collapsed;
+            tsCornerHelper.IsOn = localSettings.Values["CornerHelper"] == null ? false : true;
+            tsTheme.IsOn = localSettings.Values["DarkMode"] == null ? false : true;
+            bdCornerHelper.Visibility = tsCornerHelper.IsOn ? Visibility.Visible : Visibility.Collapsed;
+            GameHelper.ThemeModel.Theme = tsTheme.IsOn ? ElementTheme.Dark : ElementTheme.Light;
 
             //将控件塞入标题栏
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
@@ -187,7 +251,9 @@ namespace Brand7
             var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
             viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonForegroundColor = Color.FromArgb(255, 30, 30, 30);
+            viewTitleBar.ButtonForegroundColor =
+                 GameHelper.ThemeModel.Theme == ElementTheme.Dark ?
+                     Color.FromArgb(255, 255, 255, 255) : Color.FromArgb(255, 0, 0, 0);
 
             //隐藏手机版顶部状态栏
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))

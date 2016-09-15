@@ -128,6 +128,7 @@ namespace Brand7.Models
                 var serializer = new DataContractJsonSerializer(typeof(List<BrandModel>));
                 all = (List<BrandModel>)serializer.ReadObject(ms);
                 return all;
+
             }
             catch (Exception e)
             {

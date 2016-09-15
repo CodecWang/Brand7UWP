@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Brand7.Models;
+using System;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage;
 using Windows.System;
@@ -7,6 +8,7 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -15,26 +17,18 @@ namespace Brand7
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class frmSettings : Page
+    public sealed partial class frmAbout : Page
     {
-        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        GameHelper GameHelper;
 
-        public frmSettings()
+        public frmAbout()
         {
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (localSettings.Values["CornerHelper"] == null) tsCornerHelper.IsOn = false;
-            else tsCornerHelper.IsOn = true;
-        }
-
-        private void btnInitData_Click(object sender, RoutedEventArgs e)
-        {
-            //设置初始化标志
-            localSettings.Values["FirstStart"] = null;
-            FindName("txtRestartTip");
+            GameHelper = e.Parameter as GameHelper;
         }
 
         private async void btnEmail_Click(object sender, RoutedEventArgs e)
@@ -54,12 +48,6 @@ namespace Brand7
         {
             Uri blogUri = new Uri("http://ex2tron.lofter.com");
             await Launcher.LaunchUriAsync(blogUri);
-        }
-
-        private void tsCornerHelper_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (tsCornerHelper.IsOn) localSettings.Values["CornerHelper"] = true;
-            else localSettings.Values["CornerHelper"] = null;
-        }      
+        }               
     }
 }
