@@ -1,7 +1,6 @@
 ﻿using Brand7.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI;
@@ -22,7 +21,7 @@ namespace Brand7
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        string _Title = "CAR";
+        string _title = "CAR";
         double _lastOffset = 0, _currentOffset = 0;
         GameHelper GameHelper = new GameHelper();
         ObservableCollection<MenuModel> MenuList = new ObservableCollection<MenuModel>();
@@ -43,7 +42,7 @@ namespace Brand7
                 {
                     e.Handled = true;
                     frmMainInOrOut(false);
-                    txtTitle.Text = _Title;
+                    txtTitle.Text = _title;
                 }
             };
             //注册窗口大小改变事件
@@ -74,7 +73,7 @@ namespace Brand7
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             frmMainInOrOut(false);
-            txtTitle.Text = _Title;
+            txtTitle.Text = _title;
         }
 
         private void lstMenu_ItemClick(object sender, ItemClickEventArgs e)
@@ -88,7 +87,7 @@ namespace Brand7
 
             if (btnBack.Visibility == Visibility.Visible) frmMainInOrOut(false);
             svMenu.IsPaneOpen = false;
-            txtTitle.Text = _Title = menu.Name;
+            txtTitle.Text = _title = menu.Name;
             UpdateListSize(ActualWidth);
 
             pgrProcess.IsActive = false;
@@ -96,13 +95,17 @@ namespace Brand7
 
         private void lstContent_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Image img = (Image)e.OriginalSource;
-            BrandModel clickedBrand = img.DataContext as BrandModel;
-            GameHelper.BrandHelper.CurrentBrand = clickedBrand;
+            try
+            {
+                Image img = (Image)e.OriginalSource;
+                BrandModel clickedBrand = img.DataContext as BrandModel;
+                GameHelper.BrandHelper.CurrentBrand = clickedBrand;
 
-            //跳转到选定品牌的游戏页面
-            frmMain.Navigate(typeof(frmGaming), GameHelper);
-            frmMainInOrOut(true);
+                //跳转到选定品牌的游戏页面
+                frmMain.Navigate(typeof(frmGaming), GameHelper);
+                frmMainInOrOut(true);
+            }
+            catch (Exception ex) { }
         }
 
         private void svContent_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
@@ -135,7 +138,7 @@ namespace Brand7
 
         private void lstFeedAbout_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            frmMain.Navigate(typeof(frmAbout),GameHelper);
+            frmMain.Navigate(typeof(frmAbout), GameHelper);
             btnBack.Visibility = Visibility.Visible;
             ((CompositeTransform)frmMain.RenderTransform).ScaleX = 1;
             ((CompositeTransform)frmMain.RenderTransform).ScaleY = 1;

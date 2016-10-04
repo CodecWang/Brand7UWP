@@ -274,7 +274,7 @@
           Height="600" 
           Background="{ThemeResource AppGameBackgroundBrush}"
           BorderBrush="{ThemeResource AppPaneBackgroundBrush}"
-          BorderThickness="0.8">
+          BorderThickness="0.5">
 
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -424,9 +424,10 @@
                             QueryIcon="Accept"
                             VerticalAlignment="Bottom"
                             Visibility="{x:Bind CurrentBrand.IsFinished,Converter={StaticResource BoolOppositeVisibilityConverter}}"
-                            QuerySubmitted="asbInput_QuerySubmitted" Style="{StaticResource MyAutoSuggestBoxStyle}"/>
+                            QuerySubmitted="asbInput_QuerySubmitted" 
+                            Style="{StaticResource MyAutoSuggestBoxStyle}"/>
         </Grid>
-        
+
         <Border Name="bdMessage"
                 Background="{ThemeResource SystemAccentColor}"
                 VerticalAlignment="Bottom"

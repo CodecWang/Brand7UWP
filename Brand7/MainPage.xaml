@@ -82,9 +82,10 @@
                                   ItemClick="lstMenu_ItemClick"/>
                         <ListViewItem Content="SETTINGS" FontWeight="Bold" IsEnabled="False"/>
                         <Button Name="btnInit" 
-                                Content="CLEAN ALL YOUR DATA( WARNING!)" 
+                                Content="CLEAN ALL YOUR DATAS( WARNING!! )" 
                                 Height="45"
                                 Width="300"
+                                FontSize="14"
                                 Background="Transparent"
                                 Click="btnInit_Click"
                                 PointerEntered="btnCommon_PointerEntered"/>
@@ -92,21 +93,21 @@
                             <TextBlock Text="CORNER HELPER" Margin="30,10,0,0" Style="{ThemeResource TxtSmallStyle}"/>
                             <ToggleSwitch Name="tsCornerHelper" Margin="40,0,0,0" Toggled="tsCornerHelper_Toggled">
                                 <ToggleSwitch.OnContent>
-                                    <TextBlock Text="On"/>
+                                    <TextBlock Text="ON" Style="{ThemeResource TxtSmallStyle}"/>
                                 </ToggleSwitch.OnContent>
                                 <ToggleSwitch.OffContent>
-                                    <TextBlock Text="Off"/>
+                                    <TextBlock Text="OFF" Style="{ThemeResource TxtSmallStyle}"/>
                                 </ToggleSwitch.OffContent>
                             </ToggleSwitch>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="DARK MODE" Margin="30,10,0,0" Style="{ThemeResource TxtSmallStyle}"/>
-                            <ToggleSwitch Name="tsTheme" Margin="67,0,0,0" Toggled="tsTheme_Toggled">
+                            <ToggleSwitch Name="tsTheme" Margin="64,0,0,0" Toggled="tsTheme_Toggled">
                                 <ToggleSwitch.OnContent>
-                                    <TextBlock Text="On"/>
+                                    <TextBlock Text="ON" Style="{ThemeResource TxtSmallStyle}"/>
                                 </ToggleSwitch.OnContent>
                                 <ToggleSwitch.OffContent>
-                                    <TextBlock Text="Off"/>
+                                    <TextBlock Text="OFF" Style="{ThemeResource TxtSmallStyle}"/>
                                 </ToggleSwitch.OffContent>
                             </ToggleSwitch>
                         </StackPanel>
