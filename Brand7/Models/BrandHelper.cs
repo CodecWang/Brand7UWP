@@ -18,7 +18,11 @@ namespace Brand7.Models
         public ObservableCollection<BrandModel> BrandList = new ObservableCollection<BrandModel>();
         private ObservableCollection<BrandModel> _AllBrands = new ObservableCollection<BrandModel>();
 
-        public BrandHelper()
+        /// <summary>
+        /// 判断是否是第一次启动
+        /// </summary>
+        /// <returns></returns>
+        public async Task IsFirstOrNotAsync()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -26,17 +30,17 @@ namespace Brand7.Models
             if (localSettings.Values["FirstStart"] == null)
             {
                 //第一次启动，初始化本地数据文件
-                FirstStartInitDataAsync();
+                await FirstStartInitDataAsync();
                 localSettings.Values["FirstStart"] = true;
             }
-            GetAllBrandsAsync();
+            await GetAllBrandsAsync();
         }
 
         /// <summary>
         /// 第一次启动APP时，初始化本地Json文件
         /// </summary>
         /// <returns></returns>
-        public async Task FirstStartInitDataAsync()
+        private async Task FirstStartInitDataAsync()
         {
             try
             {
@@ -46,7 +50,7 @@ namespace Brand7.Models
             }
             catch (Exception e)
             {
-                var dialog = new MessageDialog(e.Message);
+                var dialog = new MessageDialog(e.Message + "FirstStartInitDataAsync");
                 await dialog.ShowAsync();
             }
         }
@@ -55,8 +59,9 @@ namespace Brand7.Models
         /// 获取全部品牌列表
         /// </summary>
         /// <returns></returns>
-        public async Task GetAllBrandsAsync()
+        private async Task GetAllBrandsAsync()
         {
+            //读取本地Json文件，获得全部品牌
             List<BrandModel> allBrands = await ReadBrandsFromLocalAsync();
 
             foreach (var brand in allBrands)
@@ -107,7 +112,7 @@ namespace Brand7.Models
             }
             catch (Exception e)
             {
-                var dialog = new MessageDialog(e.Message);
+                var dialog = new MessageDialog(e.Message + "WriteBrandsToLocalAsync");
                 await dialog.ShowAsync();
             }
         }
@@ -132,7 +137,7 @@ namespace Brand7.Models
             }
             catch (Exception e)
             {
-                var dialog = new MessageDialog(e.Message);
+                var dialog = new MessageDialog(e.Message + "ReadBrandsFromLocalAsync");
                 await dialog.ShowAsync();
                 return null;
             }

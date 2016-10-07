@@ -13,8 +13,8 @@ namespace Brand7.Models
 
         public GameHelper()
         {
-            BrandHelper = new Models.BrandHelper();
-            ThemeModel = new Models.ThemeModel();
+            BrandHelper = new BrandHelper();
+            ThemeModel = new ThemeModel();
         }
     }
 }

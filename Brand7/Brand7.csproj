@@ -16,10 +16,11 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Brand7_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Brand7_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>794413BB3E709179B86F2B3566EDB156E083AFB3</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -92,6 +93,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Brand7_StoreKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +139,7 @@
     <Content Include="Assets\Images\AV\Bad Robot.jpg" />
     <Content Include="Assets\Images\AV\CW.jpg" />
     <Content Include="Assets\Images\AV\DC.jpg" />
+    <Content Include="Assets\Images\AV\Gameloft.jpg" />
     <Content Include="Assets\Images\AV\HBO.jpg" />
     <Content Include="Assets\Images\AV\hulu.jpg" />
     <Content Include="Assets\Images\AV\Netflix.jpg" />
@@ -159,6 +162,7 @@
     <Content Include="Assets\Images\AV\工业光魔.jpg" />
     <Content Include="Assets\Images\AV\搜狐视频.jpg" />
     <Content Include="Assets\Images\AV\新线.jpg" />
+    <Content Include="Assets\Images\AV\暴雪娱乐.jpg" />
     <Content Include="Assets\Images\AV\杰瑞·布鲁克海默电影公司.jpg" />
     <Content Include="Assets\Images\AV\梦工厂.jpg" />
     <Content Include="Assets\Images\AV\派拉蒙.jpg" />
@@ -175,7 +179,9 @@
     <Content Include="Assets\Images\AV\美国全国广播公司.jpg" />
     <Content Include="Assets\Images\AV\美国广播公司.jpg" />
     <Content Include="Assets\Images\AV\美国有线电视新闻网.jpg" />
+    <Content Include="Assets\Images\AV\美国艺电公司.jpg" />
     <Content Include="Assets\Images\AV\联美.jpg" />
+    <Content Include="Assets\Images\AV\育碧.jpg" />
     <Content Include="Assets\Images\AV\腾讯视频.jpg" />
     <Content Include="Assets\Images\AV\英国广播公司.jpg" />
     <Content Include="Assets\Images\AV\蓝天工作室.jpg" />
@@ -342,11 +348,13 @@
     <Content Include="Assets\Images\Fashion\杜嘉班纳.jpg" />
     <Content Include="Assets\Images\Fashion\杰克琼斯.jpg" />
     <Content Include="Assets\Images\Fashion\柒牌.jpg" />
+    <Content Include="Assets\Images\Fashion\格拉苏蒂.jpg" />
     <Content Include="Assets\Images\Fashion\欧米茄.jpg" />
     <Content Include="Assets\Images\Fashion\海澜之家.jpg" />
     <Content Include="Assets\Images\Fashion\爱登堡.jpg" />
     <Content Include="Assets\Images\Fashion\爱马仕.jpg" />
     <Content Include="Assets\Images\Fashion\特步.jpg" />
+    <Content Include="Assets\Images\Fashion\盖尔斯.jpg" />
     <Content Include="Assets\Images\Fashion\稻草人.jpg" />
     <Content Include="Assets\Images\Fashion\红双喜.jpg" />
     <Content Include="Assets\Images\Fashion\纪梵希.jpg" />
@@ -364,6 +372,7 @@
     <Content Include="Assets\Images\Fashion\锐步.jpg" />
     <Content Include="Assets\Images\Fashion\阿玛尼.jpg" />
     <Content Include="Assets\Images\Fashion\阿迪达斯.jpg" />
+    <Content Include="Assets\Images\Fashion\飞亚达.jpg" />
     <Content Include="Assets\Images\Fashion\飞人乔丹.jpg" />
     <Content Include="Assets\Images\Fashion\香奈儿.jpg" />
     <Content Include="Assets\Images\Fashion\马克华菲.jpg" />
@@ -424,9 +433,11 @@
     <Content Include="Assets\Images\Lifestyle\渣打银行.jpg" />
     <Content Include="Assets\Images\Lifestyle\潘婷.jpg" />
     <Content Include="Assets\Images\Lifestyle\玉兰油.jpg" />
+    <Content Include="Assets\Images\Lifestyle\百度外卖.jpg" />
     <Content Include="Assets\Images\Lifestyle\百思买.jpg" />
     <Content Include="Assets\Images\Lifestyle\相宜本草.jpg" />
     <Content Include="Assets\Images\Lifestyle\红星美凯龙.jpg" />
+    <Content Include="Assets\Images\Lifestyle\美团网.jpg" />
     <Content Include="Assets\Images\Lifestyle\美赞臣.jpg" />
     <Content Include="Assets\Images\Lifestyle\联合利华.jpg" />
     <Content Include="Assets\Images\Lifestyle\舒肤佳.jpg" />
@@ -437,8 +448,10 @@
     <Content Include="Assets\Images\Lifestyle\西凤酒.jpg" />
     <Content Include="Assets\Images\Lifestyle\酩悦香槟.jpg" />
     <Content Include="Assets\Images\Lifestyle\金龙鱼.jpg" />
+    <Content Include="Assets\Images\Lifestyle\雅诗兰黛.jpg" />
     <Content Include="Assets\Images\Lifestyle\霸王.jpg" />
     <Content Include="Assets\Images\Lifestyle\飘柔.jpg" />
+    <Content Include="Assets\Images\Lifestyle\饿了么.jpg" />
     <Content Include="Assets\Images\Lifestyle\高露洁.jpg" />
     <Content Include="Assets\Images\Lifestyle\麦德龙.jpg" />
     <Content Include="Assets\Images\Lifestyle\黑人.jpg" />
@@ -452,6 +465,8 @@
     <Content Include="Assets\Images\Tech\NEC.jpg" />
     <Content Include="Assets\Images\Tech\NXP.jpg" />
     <Content Include="Assets\Images\Tech\OPPO.jpg" />
+    <Content Include="Assets\Images\Tech\Sprint.jpg" />
+    <Content Include="Assets\Images\Tech\T-Mobile.jpg" />
     <Content Include="Assets\Images\Tech\TCL.jpg" />
     <Content Include="Assets\Images\Tech\vivo.jpg" />
     <Content Include="Assets\Images\Tech\京瓷.jpg" />
@@ -460,6 +475,7 @@
     <Content Include="Assets\Images\Tech\博世.jpg" />
     <Content Include="Assets\Images\Tech\夏普.jpg" />
     <Content Include="Assets\Images\Tech\奇虎360.jpg" />
+    <Content Include="Assets\Images\Tech\威瑞森电信.jpg" />
     <Content Include="Assets\Images\Tech\宝丽来.jpg" />
     <Content Include="Assets\Images\Tech\富士康.jpg" />
     <Content Include="Assets\Images\Tech\康佳.jpg" />
@@ -473,11 +489,15 @@
     <Content Include="Assets\Images\Tech\海信.jpg" />
     <Content Include="Assets\Images\Tech\海尔.jpg" />
     <Content Include="Assets\Images\Tech\漫步者.jpg" />
+    <Content Include="Assets\Images\Tech\甲骨文.jpg" />
     <Content Include="Assets\Images\Tech\罗技.jpg" />
+    <Content Include="Assets\Images\Tech\美国电话电报公司.jpg" />
     <Content Include="Assets\Images\Tech\超威半导体.jpg" />
     <Content Include="Assets\Images\Tech\连我.jpg" />
     <Content Include="Assets\Images\Tech\酷派.jpg" />
     <Content Include="Assets\Images\Tech\长虹.jpg" />
+    <Content Include="Assets\Images\Tech\阿尔卡特朗讯.jpg" />
+    <Content Include="Assets\Images\Tech\雅虎.jpg" />
     <Content Include="Assets\Images\Tech\骁龙.jpg" />
     <Content Include="Assets\Images\Tech\魅族.jpg" />
     <Content Include="Assets\Images\Tech\魔声.jpg" />
@@ -654,6 +674,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

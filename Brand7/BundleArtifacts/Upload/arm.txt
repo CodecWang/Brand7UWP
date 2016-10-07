@@ -1,0 +1,6 @@
+MainPackage=D:\ex2tron\Documents\Code\Brand7\Brand7\bin\ARM\Release\Upload\Brand7_0.9.5.0_ARM.appx
+SymbolPackage=D:\ex2tron\Documents\Code\Brand7\Brand7\AppPackages\Brand7_0.9.5.0\Brand7_0.9.5.0_ARM.appxsym
+ResourcePack=D:\ex2tron\Documents\Code\Brand7\Brand7\_scale-100.appx
+ResourcePack=D:\ex2tron\Documents\Code\Brand7\Brand7\_scale-125.appx
+ResourcePack=D:\ex2tron\Documents\Code\Brand7\Brand7\_scale-150.appx
+ResourcePack=D:\ex2tron\Documents\Code\Brand7\Brand7\_scale-400.appx

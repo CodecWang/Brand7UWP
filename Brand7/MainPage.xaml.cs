@@ -1,6 +1,7 @@
 ﻿using Brand7.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI;
@@ -49,10 +50,11 @@ namespace Brand7
             Window.Current.SizeChanged += (s, e) => UpdateListSize(e.Size.Width);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             pgrProcess.IsActive = true;
 
+            await GameHelper.BrandHelper.IsFirstOrNotAsync();
             //初始化菜单和品牌列表
             MenuHelper.GetMenuList(MenuList);
             //启动时加载汽车品牌
@@ -105,7 +107,7 @@ namespace Brand7
                 frmMain.Navigate(typeof(frmGaming), GameHelper);
                 frmMainInOrOut(true);
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
         }
 
         private void svContent_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
