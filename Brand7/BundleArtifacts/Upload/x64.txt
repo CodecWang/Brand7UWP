@@ -1,2 +1,2 @@
-MainPackage=D:\ex2tron\Documents\Code\Brand7\Brand7\bin\x64\Release\Upload\Brand7_0.9.5.0_x64.appx
-SymbolPackage=D:\ex2tron\Documents\Code\Brand7\Brand7\AppPackages\Brand7_0.9.5.0\Brand7_0.9.5.0_x64.appxsym
+MainPackage=D:\ex2tron\Documents\Code\Brand7\Brand7\bin\x64\Release\Upload\Brand7_1.0.0.0_x64.appx
+SymbolPackage=D:\ex2tron\Documents\Code\Brand7\Brand7\AppPackages\Brand7_1.0.0.0\Brand7_1.0.0.0_x64.appxsym

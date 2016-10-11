@@ -420,12 +420,10 @@
             <AutoSuggestBox Name="asbInput"
                             Grid.Row="1"
                             PlaceholderText="INPUT ANSWER"
-                            Height="40"
                             QueryIcon="Accept"
                             VerticalAlignment="Bottom"
                             Visibility="{x:Bind CurrentBrand.IsFinished,Converter={StaticResource BoolOppositeVisibilityConverter}}"
-                            QuerySubmitted="asbInput_QuerySubmitted" 
-                            Style="{StaticResource MyAutoSuggestBoxStyle}"/>
+                            QuerySubmitted="asbInput_QuerySubmitted"/>
         </Grid>
 
         <Border Name="bdMessage"
