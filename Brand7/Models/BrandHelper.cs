@@ -66,7 +66,7 @@ namespace Brand7.Models
 
             foreach (var brand in allBrands)
             {
-                brand.Image = string.Format("Assets/Images/{0}/{1}.jpg", brand.Category, brand.Name);
+                brand.Image = string.Format("Assets/Images/{0}/{1}.jpg", brand.Category.Trim(), brand.Name.Trim());
                 BrandList.Add(brand);
                 _AllBrands.Add(brand);
             }
@@ -100,15 +100,15 @@ namespace Brand7.Models
                 StorageFile jsonFile = await _LocalFolder.GetFileAsync("Brand7DataSource.json");
 
                 var serializer = new DataContractJsonSerializer(typeof(List<BrandModel>));
-                var stream = new MemoryStream();
-                serializer.WriteObject(stream, _AllBrands.ToList());
-
-                byte[] dataBytes = new byte[stream.Length];
-                stream.Position = 0;
-                stream.Read(dataBytes, 0, (int)stream.Length);
-                string strJson = Encoding.UTF8.GetString(dataBytes);
-
-                await FileIO.WriteTextAsync(jsonFile, strJson);
+                using (var stream = new MemoryStream())
+                {
+                    serializer.WriteObject(stream, _AllBrands.ToList());
+                    byte[] dataBytes = new byte[stream.Length];
+                    stream.Position = 0;
+                    stream.Read(dataBytes, 0, (int)stream.Length);
+                    string strJson = Encoding.UTF8.GetString(dataBytes);
+                    await FileIO.WriteTextAsync(jsonFile, strJson);
+                }
             }
             catch (Exception e)
             {
@@ -129,9 +129,11 @@ namespace Brand7.Models
                 StorageFile jsonFile = await _LocalFolder.GetFileAsync("Brand7DataSource.json");
 
                 string json = await FileIO.ReadTextAsync(jsonFile);
-                var ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
                 var serializer = new DataContractJsonSerializer(typeof(List<BrandModel>));
-                all = (List<BrandModel>)serializer.ReadObject(ms);
+                using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                {
+                    all = (List<BrandModel>)serializer.ReadObject(ms);
+                };
                 return all;
 
             }

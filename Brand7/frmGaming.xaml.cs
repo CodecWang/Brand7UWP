@@ -64,6 +64,7 @@ namespace Brand7
             Bindings.Update();
 
             asbInput.Text = string.Empty;
+            asbInput.Focus(FocusState.Keyboard);
             txtTip.Visibility = Visibility.Collapsed;
         }
 

@@ -46,7 +46,7 @@ namespace Brand7
 
         private async void btnBlog_Click(object sender, RoutedEventArgs e)
         {
-            Uri blogUri = new Uri("http://ex2tron.lofter.com");
+            Uri blogUri = new Uri("http://ex2tron.top");
             await Launcher.LaunchUriAsync(blogUri);
         }               
     }

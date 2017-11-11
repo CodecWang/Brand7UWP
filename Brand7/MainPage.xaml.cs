@@ -23,6 +23,7 @@ namespace Brand7
     public sealed partial class MainPage : Page
     {
         string _title = "CAR";
+        bool _canBack = false;
         double _lastOffset = 0, _currentOffset = 0;
         GameHelper GameHelper = new GameHelper();
         ObservableCollection<MenuModel> MenuList = new ObservableCollection<MenuModel>();
@@ -39,7 +40,7 @@ namespace Brand7
             //注册系统后退键事件
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
             {
-                if (btnBack.Visibility == Visibility.Visible)
+                if (_canBack)
                 {
                     e.Handled = true;
                     frmMainInOrOut(false);
@@ -72,12 +73,6 @@ namespace Brand7
             svMenu.IsPaneOpen = true;
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            frmMainInOrOut(false);
-            txtTitle.Text = _title;
-        }
-
         private void lstMenu_ItemClick(object sender, ItemClickEventArgs e)
         {
             pgrProcess.IsActive = true;
@@ -87,7 +82,7 @@ namespace Brand7
             GameHelper.BrandHelper.GetBrandsByCategory(menu.Category);
             BrandList = GameHelper.BrandHelper.BrandList;
 
-            if (btnBack.Visibility == Visibility.Visible) frmMainInOrOut(false);
+            if (_canBack) frmMainInOrOut(false);
             svMenu.IsPaneOpen = false;
             txtTitle.Text = _title = menu.Name;
             UpdateListSize(ActualWidth);
@@ -122,7 +117,7 @@ namespace Brand7
             _currentOffset = svContent.VerticalOffset;
 
             //根据前后位移比较判断滚动方向：向上滚动，显示顶部控件；向下滚动，隐藏顶部控件
-            rpTopControl.Margin = _currentOffset > _lastOffset ? new Thickness(0, -65, 0, 0) : new Thickness(0);
+            rpTopControl.Margin = _currentOffset > _lastOffset ? new Thickness(0, -65, 0, 0) : new Thickness(15);
             bdCornerHelper.Margin = _currentOffset > _lastOffset ? new Thickness(0, 0, 0, -80) : new Thickness(0);
 
             //暗黑主题下更改标题栏的颜色
@@ -141,7 +136,7 @@ namespace Brand7
         private void lstFeedAbout_Tapped(object sender, TappedRoutedEventArgs e)
         {
             frmMain.Navigate(typeof(frmAbout), GameHelper);
-            btnBack.Visibility = Visibility.Visible;
+            _canBack = true;
             ((CompositeTransform)frmMain.RenderTransform).ScaleX = 1;
             ((CompositeTransform)frmMain.RenderTransform).ScaleY = 1;
 
@@ -160,7 +155,7 @@ namespace Brand7
         {
             if (frmMain.SourcePageType == null || frmMain.SourcePageType == typeof(frmAbout)) return;
 
-            bool isIn = btnBack.Visibility == Visibility.Collapsed ? true : false;
+            bool isIn = !_canBack;
             frmMainInOrOut(isIn);
         }
 
@@ -190,8 +185,9 @@ namespace Brand7
         {
             //保存主题设置
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            if (tsTheme.IsOn) localSettings.Values["DarkMode"] = true;
-            else localSettings.Values["DarkMode"] = null;
+            //默认开启暗黑模式
+            if (tsTheme.IsOn) localSettings.Values["DarkMode"] = null;
+            else localSettings.Values["DarkMode"] = true;
 
             //切换主题
             GameHelper.ThemeModel.Theme =
@@ -225,13 +221,13 @@ namespace Brand7
             {
                 frmMainIn.Begin();
                 rctMaskIn.Begin();
-                btnBack.Visibility = Visibility.Visible;
+                _canBack = true;
             }
             else
             {
                 frmMainOut.Begin();
                 rctMaskOut.Begin();
-                btnBack.Visibility = Visibility.Collapsed;
+                _canBack = false;
             }
         }
 
@@ -243,7 +239,7 @@ namespace Brand7
             //加载上次关闭应用时的设置
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             tsCornerHelper.IsOn = localSettings.Values["CornerHelper"] == null ? false : true;
-            tsTheme.IsOn = localSettings.Values["DarkMode"] == null ? false : true;
+            tsTheme.IsOn = localSettings.Values["DarkMode"] == null ? true : false;
             bdCornerHelper.Visibility = tsCornerHelper.IsOn ? Visibility.Visible : Visibility.Collapsed;
             GameHelper.ThemeModel.Theme = tsTheme.IsOn ? ElementTheme.Dark : ElementTheme.Light;
 

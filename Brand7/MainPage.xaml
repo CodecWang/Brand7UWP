@@ -52,7 +52,7 @@
             <TextBlock Text="{x:Bind Name}" Style="{ThemeResource TxtSmallStyle}" Margin="20,15"/>
         </DataTemplate>
     </Page.Resources>
-
+        
     <SplitView Name="svMenu" 
                DisplayMode="Overlay" 
                OpenPaneLength="300"
@@ -123,12 +123,12 @@
         </SplitView.Pane>
         <SplitView.Content>
             <Grid>
-                <Grid.RowDefinitions>
+                <!--<Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
-                </Grid.RowDefinitions>
+                </Grid.RowDefinitions>--> 
 
-                <RelativePanel Name="rpTopControl" Background="{ThemeResource AppMainBackgroundBrush}">
+                <!--<RelativePanel Name="rpTopControl" Background="{ThemeResource AppMainBackgroundBrush}" Visibility="Collapsed">
                     <RelativePanel.Transitions>
                         <TransitionCollection>
                             <RepositionThemeTransition/>
@@ -145,7 +145,7 @@
                             RelativePanel.RightOf="btnHamburger"
                             Click="btnBack_Click"
                             PointerEntered="btnCommon_PointerEntered"/>
-                    <Rectangle Name="rctTitleBar" 
+                    <Rectangle 
                                Fill="Transparent"
                                Height="65"
                                RelativePanel.AlignRightWithPanel="True"
@@ -156,7 +156,7 @@
                                Style="{ThemeResource TxtLargeStyle}"
                                RelativePanel.AlignHorizontalCenterWithPanel="True"
                                RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                </RelativePanel>
+                </RelativePanel>-->
                 <ScrollViewer Name="svContent" 
                               Grid.Row="1"
                               VerticalScrollBarVisibility="Hidden"
@@ -220,6 +220,36 @@
                     </Border.Transitions>
                     <TextBlock Text="B7" Style="{ThemeResource TxtLargeStyle}"/>
                 </Border>
+
+                <Rectangle Name="rctTitleBar" 
+                           Fill="Transparent"
+                           Height="65" 
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Top"/>
+
+                <RelativePanel Name="rpTopControl" 
+                               Background="{ThemeResource AppMainBackgroundBrush}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Height="65"
+                               Margin="15">
+                    <RelativePanel.Transitions>
+                        <TransitionCollection>
+                            <RepositionThemeTransition/>
+                        </TransitionCollection>
+                    </RelativePanel.Transitions>
+                    <Button Name="btnHamburger" 
+                            Style="{ThemeResource BtnHamburgerStyle}"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            Click="btnHamburger_Click" 
+                            PointerEntered="btnCommon_PointerEntered"/>
+                    <TextBlock Name="txtTitle"
+                               Text="CAR"
+                               Style="{ThemeResource TxtLargeStyle}"
+                               Margin="20,0"
+                               RelativePanel.RightOf="btnHamburger"
+                               RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                </RelativePanel>
             </Grid>
         </SplitView.Content>
     </SplitView>
