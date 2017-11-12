@@ -22,7 +22,7 @@ namespace Brand7
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        string _title = "CAR";
+        string _title = "IT&TECHNOLOGY";
         bool _canBack = false;
         double _lastOffset = 0, _currentOffset = 0;
         GameHelper GameHelper = new GameHelper();
@@ -58,11 +58,11 @@ namespace Brand7
             await GameHelper.BrandHelper.IsFirstOrNotAsync();
             //初始化菜单和品牌列表
             MenuHelper.GetMenuList(MenuList);
-            //启动时加载汽车品牌
-            GameHelper.BrandHelper.GetBrandsByCategory(BrandCategory.Car);
+            //启动时加载科技品牌
+            GameHelper.BrandHelper.GetBrandsByCategory(BrandCategory.Tech);
             BrandList = GameHelper.BrandHelper.BrandList;
             Bindings.Update();
-            lstMenu.SelectedIndex = 0;
+            lstMenu.SelectedIndex = 5;
             UpdateListSize(ActualWidth);
 
             pgrProcess.IsActive = false;
@@ -236,6 +236,10 @@ namespace Brand7
         /// </summary>
         private void CustomizeWindow()
         {
+            //启动固定窗口大小
+            ApplicationView.PreferredLaunchViewSize = new Windows.Foundation.Size(500, 860);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+
             //加载上次关闭应用时的设置
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             tsCornerHelper.IsOn = localSettings.Values["CornerHelper"] == null ? false : true;

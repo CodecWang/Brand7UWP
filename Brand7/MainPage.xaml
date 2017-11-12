@@ -244,7 +244,7 @@
                             Click="btnHamburger_Click" 
                             PointerEntered="btnCommon_PointerEntered"/>
                     <TextBlock Name="txtTitle"
-                               Text="CAR"
+                               Text="IT&amp;TECHNOLOGY"
                                Style="{ThemeResource TxtLargeStyle}"
                                Margin="20,0"
                                RelativePanel.RightOf="btnHamburger"
