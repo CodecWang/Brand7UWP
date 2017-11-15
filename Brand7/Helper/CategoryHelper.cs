@@ -9,31 +9,31 @@
             switch (category)
             {
                 case BrandCategory.Car:
-                    name = "CAR";
+                    name = "品车";
                     break;
                 case BrandCategory.Walking:
-                    name = "TRIP&EMS";
+                    name = "旅途";
                     break;
                 case BrandCategory.Lifestyle:
-                    name = "LIFESTYLE";
+                    name = "生活";
                     break;
                 case BrandCategory.Cater:
-                    name = "FOOD&CATER";
+                    name = "吃货";
                     break;
                 case BrandCategory.AV:
-                    name = "AUDIO&VEDIO";
+                    name = "娱乐";
                     break;
                 case BrandCategory.Tech:
-                    name = "IT&TECHNOLOGY";
+                    name = "宅男";
                     break;
                 case BrandCategory.Fashion:
-                    name = "SPORTS&FASHION";
+                    name = "时尚";
                     break;
                 case BrandCategory.All:
-                    name = "ALL BRANDS";
+                    name = "所有品牌";
                     break;
                 default:
-                    name = "ALL BRANDS";
+                    name = "所有品牌";
                     break;
             }
 

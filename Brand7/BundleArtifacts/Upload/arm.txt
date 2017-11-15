@@ -1,6 +1,6 @@
-MainPackage=D:\Surface\Desktop\NewBrand7\Brand7\Brand7\bin\ARM\Release\Upload\Brand7_1.5.2.0_ARM.appx
-SymbolPackage=D:\Surface\Desktop\NewBrand7\Brand7\Brand7\bin\ARM\Release\Upload\Brand7_1.5.2.0\Brand7_1.5.2.0_ARM.appxsym
-ResourcePack=D:\Surface\Desktop\NewBrand7\Brand7\Brand7\bin\ARM\Release\Brand7_1.5.2.0_scale-100.appx
-ResourcePack=D:\Surface\Desktop\NewBrand7\Brand7\Brand7\bin\ARM\Release\Brand7_1.5.2.0_scale-125.appx
-ResourcePack=D:\Surface\Desktop\NewBrand7\Brand7\Brand7\bin\ARM\Release\Brand7_1.5.2.0_scale-150.appx
-ResourcePack=D:\Surface\Desktop\NewBrand7\Brand7\Brand7\bin\ARM\Release\Brand7_1.5.2.0_scale-400.appx
+MainPackage=D:\Surface\Documents\01.Build\Projects\Mine\Brand7\Brand7\bin\ARM\Release\Upload\Brand7_2.0.1.0_ARM.appx
+SymbolPackage=D:\Surface\Documents\01.Build\Projects\Mine\Brand7\Brand7\bin\ARM\Release\Upload\Brand7_2.0.1.0\Brand7_2.0.1.0_ARM.appxsym
+ResourcePack=D:\Surface\Documents\01.Build\Projects\Mine\Brand7\Brand7\bin\ARM\Release\Brand7_2.0.1.0_scale-100.appx
+ResourcePack=D:\Surface\Documents\01.Build\Projects\Mine\Brand7\Brand7\bin\ARM\Release\Brand7_2.0.1.0_scale-125.appx
+ResourcePack=D:\Surface\Documents\01.Build\Projects\Mine\Brand7\Brand7\bin\ARM\Release\Brand7_2.0.1.0_scale-150.appx
+ResourcePack=D:\Surface\Documents\01.Build\Projects\Mine\Brand7\Brand7\bin\ARM\Release\Brand7_2.0.1.0_scale-400.appx

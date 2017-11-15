@@ -22,7 +22,7 @@ namespace Brand7
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        string _title = "IT&TECHNOLOGY";
+        string _title = "宅男";
         bool _canBack = false;
         double _lastOffset = 0, _currentOffset = 0;
         GameHelper GameHelper = new GameHelper();
@@ -58,7 +58,7 @@ namespace Brand7
             await GameHelper.BrandHelper.IsFirstOrNotAsync();
             //初始化菜单和品牌列表
             MenuHelper.GetMenuList(MenuList);
-            //启动时加载科技品牌
+            //启动时加载宅男品牌
             GameHelper.BrandHelper.GetBrandsByCategory(BrandCategory.Tech);
             BrandList = GameHelper.BrandHelper.BrandList;
             Bindings.Update();
@@ -142,7 +142,7 @@ namespace Brand7
 
             svMenu.IsPaneOpen = false;
             lstMenu.SelectedIndex = -1;
-            txtTitle.Text = "SETTINGS";
+            txtTitle.Text = "关于|反馈";
         }
 
         private void btnCommon_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -166,16 +166,16 @@ namespace Brand7
             //弹出警告提醒
             var dialog = new ContentDialog()
             {
-                Content = "THIS WILL CLEAN ALL YOUR GAME DATA, ARE YOU SURE?",
-                Title = "WARNING",
-                PrimaryButtonText = "YES",
-                SecondaryButtonText = "NO"
+                Content = "此操作会清空所有游戏数据噢，确定?",
+                Title = "警告",
+                PrimaryButtonText = "是",
+                SecondaryButtonText = "否"
             };
             //按下YES弹出重启提醒
             dialog.PrimaryButtonClick += async (a, b) =>
             {
                 localSettings.Values["FirstStart"] = null;
-                var tip = new MessageDialog("RESTART YOUR APP TO TAKE EFFECT.");
+                var tip = new MessageDialog("请重启APP以使更改生效");
                 await tip.ShowAsync();
             };
             await dialog.ShowAsync();

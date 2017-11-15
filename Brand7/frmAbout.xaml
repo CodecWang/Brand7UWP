@@ -26,19 +26,19 @@
     <Grid Background="{ThemeResource AppPaneBackgroundBrush}">
         <StackPanel Margin="15,100,0,0"
                     Background="{ThemeResource AppPaneBackgroundBrush}">
-            <TextBlock Text="FEEDBACK" Style="{StaticResource TxtLargeTitleStyle}"/>
+            <TextBlock Text="关于|反馈" Style="{StaticResource TxtLargeTitleStyle}"/>
             <Button Name="btnEmail" 
-                Content="MAIL ME" 
+                Content="邮件" 
                 Style="{StaticResource BtnTransparentStyle}"
                 Click="btnEmail_Click"/>
             <Button Name="btnBlog" 
-                Content="MY BLOG" 
+                Content="我的网站" 
                 Style="{StaticResource BtnTransparentStyle}" 
                 Click="btnBlog_Click"/>
-            <TextBlock Text="VERSION" Style="{StaticResource TxtLargeTitleStyle}"/>
-            <TextBlock Text="V 1.5.1(CONTAINS 550 BRANDS!) " FontSize="14" Margin="10,0"/>
-            <TextBlock Text="DECLARATION" Style="{StaticResource TxtLargeTitleStyle}"/>
-            <TextBlock Text="ALL BRAND IMAGES ARE FROM THE INTERNET." FontSize="14" Margin="10,0"/>
+            <TextBlock Text="版本" Style="{StaticResource TxtLargeTitleStyle}"/>
+            <TextBlock Text="V 2.0.1（更新至550个品牌！）" FontSize="14" Margin="10,0"/>
+            <TextBlock Text="声明" Style="{StaticResource TxtLargeTitleStyle}"/>
+            <TextBlock Text="所有品牌图片均来自网络，如有问题，请及时反馈，多谢！" FontSize="14" Margin="10,0"/>
         </StackPanel>
     
     </Grid>

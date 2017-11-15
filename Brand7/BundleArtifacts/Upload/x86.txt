@@ -1,2 +1,2 @@
-MainPackage=D:\Surface\Desktop\NewBrand7\Brand7\Brand7\bin\x86\Release\Upload\Brand7_1.5.2.0_x86.appx
-SymbolPackage=D:\Surface\Desktop\NewBrand7\Brand7\Brand7\bin\x86\Release\Upload\Brand7_1.5.2.0\Brand7_1.5.2.0_x86.appxsym
+MainPackage=D:\Surface\Documents\01.Build\Projects\Mine\Brand7\Brand7\bin\x86\Release\Upload\Brand7_2.0.1.0_x86.appx
+SymbolPackage=D:\Surface\Documents\01.Build\Projects\Mine\Brand7\Brand7\bin\x86\Release\Upload\Brand7_2.0.1.0\Brand7_2.0.1.0_x86.appxsym

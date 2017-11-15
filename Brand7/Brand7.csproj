@@ -118,12 +118,12 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\BrandHelper.cs" />
+    <Compile Include="Helper\BrandHelper.cs" />
     <Compile Include="Models\BrandModel.cs" />
-    <Compile Include="Models\CategoryHelper.cs" />
-    <Compile Include="Models\GameHelper.cs" />
-    <Compile Include="Models\JSONHelper.cs" />
-    <Compile Include="Models\MenuHelper.cs" />
+    <Compile Include="Helper\CategoryHelper.cs" />
+    <Compile Include="Helper\GameHelper.cs" />
+    <Compile Include="Helper\JSONHelper.cs" />
+    <Compile Include="Helper\MenuHelper.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\ThemeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

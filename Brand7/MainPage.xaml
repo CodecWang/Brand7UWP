@@ -68,21 +68,22 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Name="txtAppName"
-                               Text="Brand7"
+                               Text="品牌漆"
                                Style="{ThemeResource TxtLargeStyle}" 
                                HorizontalAlignment="Left"
                                Margin="13,20"/>
                     <StackPanel Grid.Row="1">
-                        <ListViewItem Content="ALL BRANDS" FontWeight="Bold" IsEnabled="False"/>
+                        <ListViewItem Content="所有品牌" FontWeight="Bold" IsEnabled="False"/>
                         <ListView Name="lstMenu" 
                                   Width="300"
                                   ItemsSource="{x:Bind MenuList}" 
                                   ItemTemplate="{ThemeResource MenuItemTemplate}"
                                   IsItemClickEnabled="True"
                                   ItemClick="lstMenu_ItemClick"/>
-                        <ListViewItem Content="SETTINGS" FontWeight="Bold" IsEnabled="False"/>
+                        <ListViewItem Content="设置" FontWeight="Bold" IsEnabled="False"/>
                         <Button Name="btnInit" 
-                                Content="CLEAN ALL YOUR DATAS( WARNING!! )" 
+                                Content="      清空游戏数据"
+                                HorizontalContentAlignment="Left"
                                 Height="45"
                                 Width="300"
                                 FontSize="14"
@@ -90,30 +91,30 @@
                                 Click="btnInit_Click"
                                 PointerEntered="btnCommon_PointerEntered"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="CORNER HELPER" Margin="30,10,0,0" Style="{ThemeResource TxtSmallStyle}"/>
-                            <ToggleSwitch Name="tsCornerHelper" Margin="40,0,0,0" Toggled="tsCornerHelper_Toggled">
+                            <TextBlock Text="小助手" Margin="30,10,0,0" Style="{ThemeResource TxtSmallStyle}"/>
+                            <ToggleSwitch Name="tsCornerHelper" Margin="78,0,0,0" Toggled="tsCornerHelper_Toggled">
                                 <ToggleSwitch.OnContent>
-                                    <TextBlock Text="ON" Style="{ThemeResource TxtSmallStyle}"/>
+                                    <TextBlock Text="开" Style="{ThemeResource TxtSmallStyle}"/>
                                 </ToggleSwitch.OnContent>
                                 <ToggleSwitch.OffContent>
-                                    <TextBlock Text="OFF" Style="{ThemeResource TxtSmallStyle}"/>
+                                    <TextBlock Text="关" Style="{ThemeResource TxtSmallStyle}"/>
                                 </ToggleSwitch.OffContent>
                             </ToggleSwitch>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="DARK MODE" Margin="30,10,0,0" Style="{ThemeResource TxtSmallStyle}"/>
+                            <TextBlock Text="暗黑主题" Margin="30,10,0,0" Style="{ThemeResource TxtSmallStyle}"/>
                             <ToggleSwitch Name="tsTheme" Margin="64,0,0,0" Toggled="tsTheme_Toggled">
                                 <ToggleSwitch.OnContent>
-                                    <TextBlock Text="ON" Style="{ThemeResource TxtSmallStyle}"/>
+                                    <TextBlock Text="开" Style="{ThemeResource TxtSmallStyle}"/>
                                 </ToggleSwitch.OnContent>
                                 <ToggleSwitch.OffContent>
-                                    <TextBlock Text="OFF" Style="{ThemeResource TxtSmallStyle}"/>
+                                    <TextBlock Text="关" Style="{ThemeResource TxtSmallStyle}"/>
                                 </ToggleSwitch.OffContent>
                             </ToggleSwitch>
                         </StackPanel>
                     </StackPanel>
                     <ListViewItem Name="lstFeedAbout" 
-                                  Content="ABOUT&amp;FEEDBACK"
+                                  Content="关于&amp;反馈"
                                   FontWeight="Bold"
                                   VerticalAlignment="Bottom" 
                                   Grid.Row="2"
@@ -123,40 +124,6 @@
         </SplitView.Pane>
         <SplitView.Content>
             <Grid>
-                <!--<Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>--> 
-
-                <!--<RelativePanel Name="rpTopControl" Background="{ThemeResource AppMainBackgroundBrush}" Visibility="Collapsed">
-                    <RelativePanel.Transitions>
-                        <TransitionCollection>
-                            <RepositionThemeTransition/>
-                        </TransitionCollection>
-                    </RelativePanel.Transitions>
-                    <Button Name="btnHamburger" 
-                            Style="{ThemeResource BtnHamburgerStyle}"
-                            RelativePanel.AlignLeftWithPanel="True"
-                            Click="btnHamburger_Click" 
-                            PointerEntered="btnCommon_PointerEntered"/>
-                    <Button Name="btnBack"
-                            Style="{ThemeResource BtnBackStyle}"
-                            Visibility="Collapsed"
-                            RelativePanel.RightOf="btnHamburger"
-                            Click="btnBack_Click"
-                            PointerEntered="btnCommon_PointerEntered"/>
-                    <Rectangle 
-                               Fill="Transparent"
-                               Height="65"
-                               RelativePanel.AlignRightWithPanel="True"
-                               Margin="0,0,140,0"
-                               RelativePanel.RightOf="btnBack"/>
-                    <TextBlock Name="txtTitle"
-                               Text="CAR"
-                               Style="{ThemeResource TxtLargeStyle}"
-                               RelativePanel.AlignHorizontalCenterWithPanel="True"
-                               RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                </RelativePanel>-->
                 <ScrollViewer Name="svContent" 
                               Grid.Row="1"
                               VerticalScrollBarVisibility="Hidden"
@@ -218,7 +185,8 @@
                             <RepositionThemeTransition/>
                         </TransitionCollection>
                     </Border.Transitions>
-                    <TextBlock Text="B7" Style="{ThemeResource TxtLargeStyle}"/>
+                    <TextBlock Text="品" 
+                               Style="{ThemeResource TxtLargeStyle}"/>
                 </Border>
 
                 <Rectangle Name="rctTitleBar" 
@@ -244,7 +212,7 @@
                             Click="btnHamburger_Click" 
                             PointerEntered="btnCommon_PointerEntered"/>
                     <TextBlock Name="txtTitle"
-                               Text="IT&amp;TECHNOLOGY"
+                               Text="宅男"
                                Style="{ThemeResource TxtLargeStyle}"
                                Margin="20,0"
                                RelativePanel.RightOf="btnHamburger"

@@ -51,8 +51,8 @@ namespace Brand7
 
             //获取要共享的图片
             string uri = string.Format("ms-appx:///{0}", CurrentBrand.Image);
-            args.Request.Data.Properties.Title = "ASK FOR HELP";
-            args.Request.Data.Properties.Description = "Ask friends for help.";
+            args.Request.Data.Properties.Title = "搞不定？叫上朋友一起搞~";
+            //args.Request.Data.Properties.Description = "";
             args.Request.Data.SetBitmap(Windows.Storage.Streams.RandomAccessStreamReference.CreateFromUri(new Uri(uri)));
 
             deferral.Complete();
@@ -71,16 +71,16 @@ namespace Brand7
         private async void asbInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             //输入的名称正确，设置Brand的IsFinished为True
-            if (args.QueryText == string.Empty) txtMessage.Text = "( ╯□╰ )YOUR ANSWER?";
+            if (args.QueryText == string.Empty) txtMessage.Text = "你的答案去火星了吗( ╯□╰ )?";
             else if (IsAnswerRight(args.QueryText, CurrentBrand))
             {
                 CurrentBrand.IsFinished = true;
-                txtMessage.Text = "( •̀ ω •́ )BINGO!!!";
+                txtMessage.Text = "( •̀ ω •́ )bingo 棒!!!";
                 Bindings.Update();
                 //将更新后的数据保存到本地
                 await GameHelper.BrandHelper.WriteBrandsToLocalAsync();
             }
-            else txtMessage.Text = "( ╯□╰ )WHOOPS!";
+            else txtMessage.Text = "( ╯□╰ )whoops 不对噢!";
 
             //提示动画
             MessageIn.Begin();

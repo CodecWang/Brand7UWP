@@ -384,7 +384,7 @@
                         PointerEntered="btnCommon_PointerEntered">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB50;" Margin="0,10,10,10" />
-                        <TextBlock Text="TIP" VerticalAlignment="Center" />
+                        <TextBlock Text="提示" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
                 <Button Name="btnShare" 
@@ -394,7 +394,7 @@
                         PointerEntered="btnCommon_PointerEntered">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE72D;" Margin="0,10,10,10" />
-                        <TextBlock Text="HELP" VerticalAlignment="Center" />
+                        <TextBlock Text="求助" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
                 <TextBlock Name="txtTip" 
@@ -419,7 +419,7 @@
 
             <AutoSuggestBox Name="asbInput"
                             Grid.Row="1"
-                            PlaceholderText="INPUT ANSWER"
+                            PlaceholderText="输入答案"
                             QueryIcon="Accept"
                             VerticalAlignment="Bottom"
                             Visibility="{x:Bind CurrentBrand.IsFinished,Converter={StaticResource BoolOppositeVisibilityConverter}}"
