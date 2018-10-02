@@ -8,17 +8,17 @@ APP下载:
  
 - https://www.microsoft.com/store/productId/9NBLGGH546QC
 
-![](./Brand7/Scrrenshots/SplashScreen.scale-150.png)
+![](../Brand7/Screenshots/SplashScreen.scale-150.png)
 
 ## APP简介
 
 想要成为一个“品牌”大师吗？ 品牌漆-550个品牌等你来挑战！ 涵盖汽车类、科技类、服装时尚类、生活类、旅行类、餐饮类、娱乐类七大品类：“Expand your brand!”
 
-![](./Brand7/Scrrenshots/dark1.png)
+![](../Brand7/Screenshots/dark1.png)
 
-![](./Brand7/Scrrenshots/classes.png)
+![](../Brand7/Screenshots/classes.png)
 
-![](./Brand7/Scrrenshots/light1.png)
+![](../Brand7/Screenshots/light1.png)
 
 
 ## 版本更新
